@@ -13,8 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    @if (\Illuminate\Support\Facades\Auth::user()->role->id==1)
+                            <h1>admin</h1>
 
-                    You are logged in!
+                        @elseif(\Illuminate\Support\Facades\Auth::user()->role->id==2)
+                            <h1>user</h1>
+                    @endif
+
                 </div>
             </div>
         </div>
