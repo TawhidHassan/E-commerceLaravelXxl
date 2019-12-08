@@ -24,9 +24,10 @@ class RedirectIfAuthenticated
         elseif (Auth::guard($guard)->check() && Auth::user()->role->id == 2 ) {
             return redirect()->route('home');
         }
-        else{
-
+        else {
             return $next($request);
         }
+
+
     }
 }

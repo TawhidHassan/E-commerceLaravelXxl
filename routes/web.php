@@ -17,10 +17,19 @@ Route::get('/', function () {
 
 
 
-Route::get('/admin','AdminController@login');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin/dashboard','AdminController@dashboard')->name('admin.dashbord');
+
+
+Route::get('/admin','AdminController@login')->name('admin.login');
+
+
+Route::group(['middleware'=>['auth','admin']], function () {
+
+    Route::get('/admin/dashboard','AdminController@dashboard')->name('admin.dashbord');
+    Route::get('/admin/setting','AdminController@setting')->name('admin.setting');
+
+});

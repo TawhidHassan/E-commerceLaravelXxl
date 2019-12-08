@@ -63,12 +63,17 @@ $(document).ready(function(){
 	
 	$("#password_validate").validate({
 		rules:{
-			pwd:{
+			old_pasd:{
 				required: true,
 				minlength:6,
 				maxlength:20
 			},
-			pwd2:{
+            new_pwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			conf_pwd:{
 				required:true,
 				minlength:6,
 				maxlength:20,
