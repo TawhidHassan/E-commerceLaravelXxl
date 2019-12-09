@@ -1,6 +1,38 @@
 
 $(document).ready(function(){
-	
+
+
+    //ajax request for check current password and old password  to be match?
+    $("#new_pwd").click(function () {
+
+        var old_pasd=$("#old_pasd").val();
+        $.ajax({
+            type:'get',
+            url:'/admin/check-psd',
+            data:{old_pasd:old_pasd},
+
+            success:function (resp) {
+                if (resp=="false")
+                {
+                    $("#checkPass").html("<font color='red'>Current Password is Incorrect</font>");
+
+                }else (resp=="true")
+                {
+                    $("#checkPass").html("<font color='green'>Current Password is correct</font>");
+                }
+
+            },
+            error:function () {
+                alert("error");
+            }
+
+
+        })
+
+    });
+    //ajax
+
+
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();

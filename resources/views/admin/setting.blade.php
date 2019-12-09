@@ -21,6 +21,7 @@
                                         <label class="control-label">Old Password</label>
                                         <div class="controls">
                                             <input type="password" name="oldPassword" id="old_pasd" required />
+                                            <span id="checkPass"></span>
                                         </div>
                                     </div>
                                     <div class="control-group">
