@@ -3,37 +3,29 @@ $(document).ready(function(){
 
 
     //ajax request for check current password and old password  to be match?
-    $("#new_pwd").click(function () {
-
-        var old_pasd=$("#old_pasd").val();
+    $("#current_pwd").keyup(function(){
+        var current_pwd = $("#current_pwd").val();
         $.ajax({
             type:'get',
-            url:'/admin/check-psd',
-            data:{old_pasd:old_pasd},
-
-            success:function (resp) {
-                if (resp=="false")
-                {
-                    $("#checkPass").html("<font color='red'>Current Password is Incorrect</font>");
-
-                }else (resp=="true")
-                {
-                    $("#checkPass").html("<font color='green'>Current Password is correct</font>");
+            url:'/admin/check-pwd',
+            data:{current_pwd:current_pwd},
+            success:function(resp){
+                //alert(resp);
+                if(resp=="false"){
+                    $("#chkPwd").html("<font color='red'>Current Password is Incorrect</font>");
+                }else if(resp=="true"){
+                    $("#chkPwd").html("<font color='green'>Current Password is Correct</font>");
                 }
-
-            },
-            error:function () {
-                alert("error");
+            },error:function(){
+                alert("Error");
             }
-
-
-        })
-
+        });
     });
     //ajax
 
 
-	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+
+    $('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();
 	

@@ -31,6 +31,7 @@ Route::group(['middleware'=>['auth','admin']], function () {
 
     Route::get('/admin/dashboard','AdminController@dashboard')->name('admin.dashbord');
     Route::get('/admin/setting','AdminController@setting')->name('admin.setting');
-    Route::get('/admin/check-psd','AdminController@checkPasd')->name('admin.checkPasd');
+    Route::get('/admin/check-pwd','AdminController@checkPasd')->name('admin.checkPasd');
+    Route::post('/admin/updatepassword','AdminController@updatePassword')->name('admin.updatePassword');
 
 });
