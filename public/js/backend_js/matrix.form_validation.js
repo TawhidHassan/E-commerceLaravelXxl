@@ -58,6 +58,33 @@ $(document).ready(function(){
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+
+
+
+    // Add Category Validation
+    $("#add_category").validate({
+        rules:{
+            category_name:{
+                required:true
+            },
+            description:{
+                required:true,
+            },
+            url:{
+                required:true,
+            }
+        },
+        errorClass: "help-inline",
+        errorElement: "span",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        }
+    });
+
 	
 	$("#number_validate").validate({
 		rules:{
