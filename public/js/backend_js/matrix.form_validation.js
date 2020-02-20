@@ -24,6 +24,13 @@ $(document).ready(function(){
     //ajax
 
 
+	$("#delCat").click(function(){
+		if(confirm('Are you sure you want to delete this Category?')){
+			return true;
+		}
+		return false;
+	});
+
 
     $('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
@@ -141,4 +148,5 @@ $(document).ready(function(){
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+
 });
