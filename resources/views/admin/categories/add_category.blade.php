@@ -21,17 +21,17 @@
                                         <input type="text" name="category_name" id="category_name">
                                     </div>
                                 </div>
-                                {{--<div class="control-group">--}}
-                                    {{--<label class="control-label">Category Level</label>--}}
-                                    {{--<div class="controls">--}}
-                                        {{--<select name="parent_id" style="width: 220px;">--}}
-                                            {{--<option value="0">Main Category</option>--}}
-                                            {{--@foreach($levels as $val)--}}
-                                                {{--<option value="{{ $val->id }}">{{ $val->name }}</option>--}}
-                                            {{--@endforeach--}}
-                                        {{--</select>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
+                                <div class="control-group">
+                                    <label class="control-label">Category Level</label>
+                                    <div class="controls">
+                                        <select name="parent_id" style="width: 220px;">
+                                            <option value="0">Main Category</option>
+                                            @foreach($levels as $val)
+                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="control-group">
                                     <label class="control-label">Description</label>
                                     <div class="controls">
