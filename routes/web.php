@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ProductController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,7 +43,8 @@ Route::group(['middleware'=>['auth','admin']], function () {
     Route::get('/admin/view-categories','CategoryController@viewCategories');
 
     // Products Routes
-	Route::match(['get','post'],'/admin/add-product','ProductController@addProduct');
+    Route::match(['get','post'],'/admin/add-product','ProductController@addProduct');
+    Route::match(['get', 'post'], '/admin/edit-product/{id}','ProductController@editProduct');
 	Route::get('/admin/view-products','ProductController@viewProducts');
 
 });
