@@ -157,6 +157,33 @@ $(document).ready(function(){
 			$(element).parents('.control-group').addClass('success');
 		}
 	});
+
+	// $("#delProduct").click(function(){
+	// 	if(confirm('Are you sure you want to delete this Product?')){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// });
+	$(document).on('click','.deleteRecord',function(e){
+		var id=$(this).attr('rel'); 
+		var deleteFunction=$(this).attr('rel1');
+		
+		swal({
+			title:"Are you want to delete this product",
+			text:"you will not be able to recover this record again!",
+			type:"warning",
+			showCloseButton: true,
+			showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtontext: "Yes, Delete it!",
+		},
+		function(){
+			window.location.href="/admin/"+deleteFunction+"/"+id;
+		}
+	);
+	
+
+	});
 	
 	$("#number_validate").validate({
 		rules:{

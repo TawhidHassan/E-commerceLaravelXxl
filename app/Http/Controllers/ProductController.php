@@ -188,4 +188,10 @@ class ProductController extends Controller
         return redirect()->back()->with('flash_message_success', 'Product image has been deleted successfully');
 	}
 
+
+	public function deleteProduct($id = null){
+        Product::where(['id'=>$id])->delete();
+        return redirect()->back()->with('flash_message_success', 'Product has been deleted successfully');
+    }
+
 }
