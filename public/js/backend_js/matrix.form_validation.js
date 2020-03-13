@@ -24,12 +24,31 @@ $(document).ready(function(){
     //ajax
 
 
-	$("#delCat").click(function(){
-		if(confirm('Are you sure you want to delete this Category?')){
-			return true;
+	// $("#delCat").click(function(){
+	// 	if(confirm('Are you sure you want to delete this Category?')){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// });
+	
+	$(document).on('click','.deleteCategoryRecord',function(e){
+		var id=$(this).attr('rel'); 
+		var deleteFunction=$(this).attr('rel1');
+		
+		swal({
+			title:"Are you want to delete this category",
+			text:"you will not be able to recover this record again!",
+			type:"warning",
+			showCloseButton: true,
+			showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtontext: "Yes, Delete it!",
+		},
+		function(){
+			window.location.href="/admin/"+deleteFunction+"/"+id;
 		}
-		return false;
-	});
+	);
+});
 
 
     $('input[type=checkbox],input[type=radio],input[type=file]').uniform();
@@ -181,9 +200,9 @@ $(document).ready(function(){
 			window.location.href="/admin/"+deleteFunction+"/"+id;
 		}
 	);
-	
-
 	});
+
+	
 	
 	$("#number_validate").validate({
 		rules:{
