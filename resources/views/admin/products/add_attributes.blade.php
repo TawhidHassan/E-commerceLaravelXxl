@@ -26,11 +26,46 @@
             <h5>Add Product</h5>
           </div>
           <div class="widget-content nopadding">
-           
+            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{ url('admin/add-attributes/'.$productDetails->id) }}" name="add_product" id="add_product" novalidate="novalidate">{{ csrf_field() }}
+                <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
+                <div class="control-group">
+                  <label class="control-label">Category Name</label>
+                  <label class="control-label">{{ $category_name }}</label>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Product Name</label>
+                  <label class="control-label">{{ $productDetails->product_name }}</label>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Product Code</label>
+                  <label class="control-label">{{ $productDetails->product_code }}</label>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Product Color</label>
+                  <label class="control-label">{{ $productDetails->product_color }}</label>
+                </div>
+                <div class="control-group">
+                  <label class="control-label"></label>
+                  <div class="controls field_wrapper">
+                    <input required title="Required" type="text" name="sku[]" id="sku" placeholder="SKU" style="width:120px;">
+                    <input required title="Required" type="text" name="size[]" id="size" placeholder="Size" style="width:120px;">
+                    <input required title="Required" type="text" name="price[]" id="price" placeholder="Price" style="width:120px;"> 
+                    <input required title="Required" type="text" name="stock[]" id="stock" placeholder="Stock" style="width:120px;">
+                    <a href="javascript:void(0);" class="add_button btn-success" title="Add field">Add</a>
+                  </div>
+                </div>
+               
+                <div class="form-actions">
+                  <input type="submit" value="Add Attributes" class="btn btn-success">
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+  
+
+      {{-- ...... --}}
   </div>
 </div>
 

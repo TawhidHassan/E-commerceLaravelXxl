@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
@@ -194,9 +195,33 @@ class ProductController extends Controller
         return redirect()->back()->with('flash_message_success', 'Product has been deleted successfully');
 	}
 	
+	public function addAttributes(Request $request, $id=null){
+		$productDetails = Product::where(['id' => $id])->first();
+		$categoryDetails = Category::where(['id'=>$productDetails->category_id])->first();
+		$category_name = $categoryDetails->name;
 
-	public function addAttributes(Request $request,$id=null)
-	{
-		return view('admin.products.add_attributes');
+		if($request->isMethod('post'))
+		{
+			$data = $request->all();
+		    foreach($data['sku'] as $key => $val){
+				if(!empty($val))
+				{
+				$attr = new ProductsAttribute();
+				$attr->product_id = $id;
+				$attr->sku = $val;
+				$attr->size = $data['size'][$key];
+				$attr->price = $data['price'][$key];
+				$attr->stock = $data['stock'][$key];
+				$attr->save();
+				}
+			}
+			return redirect('admin/add-attributes/'.$id)->with('flash_message_success', 'Product Attributes has been added successfully');
+		}
+
+
+
+		return view('admin.products.add_attributes')->with(compact('productDetails','category_name'));	
+
 	}
+
 }

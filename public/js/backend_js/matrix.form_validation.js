@@ -201,8 +201,25 @@ $(document).ready(function(){
 		}
 	);
 	});
-
-	
+//add files dinamicaly
+	$(document).ready(function(){
+	    var maxField = 10; //Input fields increment limitation
+	    var addButton = $('.add_button'); //Add button selector
+	    var wrapper = $('.field_wrapper'); //Input field wrapper
+	    var fieldHTML = '<div class="controls field_wrapper" style="margin-left:-2px;"><input type="text" name="sku[]" style="width:120px"/>&nbsp;<input type="text" name="size[]" style="width:120px"/>&nbsp;<input type="text" name="price[]" style="width:120px"/>&nbsp;<input type="text" name="stock[]" style="width:120px"/><a href="javascript:void(0);" class="remove_button" title="Remove field">Remove</a></div>'; //New input field html 
+	    var x = 1; //Initial field counter is 1
+	    $(addButton).click(function(){ //Once add button is clicked
+	        if(x < maxField){ //Check maximum number of input fields
+	            x++; //Increment field counter
+	            $(wrapper).append(fieldHTML); // Add field html
+	        }
+	    });
+	    $(wrapper).on('click', '.remove_button', function(e){ //Once remove button is clicked
+	        e.preventDefault();
+	        $(this).parent('div').remove(); //Remove field html
+	        x--; //Decrement field counter
+	    });
+	});
 	
 	$("#number_validate").validate({
 		rules:{
