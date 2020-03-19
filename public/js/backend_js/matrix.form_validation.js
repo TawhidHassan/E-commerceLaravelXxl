@@ -201,6 +201,28 @@ $(document).ready(function(){
 		}
 	);
 	});
+
+
+//delete attributes
+	$(document).on('click','.deleteAttrRecord',function(e){
+		var id=$(this).attr('rel'); 
+		var deleteFunction=$(this).attr('rel1');
+		
+		swal({
+			title:"Are you want to delete this Attributes",
+			text:"you will not be able to recover this record again!",
+			type:"warning",
+			showCloseButton: true,
+			showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtontext: "Yes, Delete it!",
+		},
+		function(){
+			window.location.href="/admin/"+deleteFunction+"/"+id;
+		}
+	);
+	});
+
 //add files dinamicaly
 	$(document).ready(function(){
 	    var maxField = 10; //Input fields increment limitation

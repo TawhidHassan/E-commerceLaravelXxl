@@ -52,6 +52,7 @@ Route::group(['middleware'=>['auth','admin']], function () {
     
     // product attributes
     Route::match(['get','post'],'/admin/add-attributes/{id}','ProductController@addAttributes');
+    Route::get('/admin/delete-attribute/{id}','ProductController@deleteAttributes');
 
 
 });

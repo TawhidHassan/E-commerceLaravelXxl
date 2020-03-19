@@ -196,13 +196,16 @@ class ProductController extends Controller
 	}
 	
 	public function addAttributes(Request $request, $id=null){
-		$productDetails = Product::where(['id' => $id])->first();
+		$productDetails = Product::with('attributes')->where(['id' => $id])->first();
+		$productDetails=json_decode(json_encode($productDetails));
+	
 		$categoryDetails = Category::where(['id'=>$productDetails->category_id])->first();
 		$category_name = $categoryDetails->name;
 
 		if($request->isMethod('post'))
 		{
 			$data = $request->all();
+
 		    foreach($data['sku'] as $key => $val){
 				if(!empty($val))
 				{
@@ -222,6 +225,12 @@ class ProductController extends Controller
 
 		return view('admin.products.add_attributes')->with(compact('productDetails','category_name'));	
 
+	}
+
+	public function deleteAttributes($id=null)
+	{
+		ProductsAttribute::where(['id'=>$id])->delete();
+        return redirect()->back()->with('flash_message_success', 'Product Attribute has been deleted successfully');
 	}
 
 }

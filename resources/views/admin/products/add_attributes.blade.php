@@ -65,7 +65,49 @@
       </div>
   
 
-      {{-- ...... --}}
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>Attributes</h5>
+            </div>
+            <div class="widget-content nopadding">
+              <form action="{{ url('admin/edit-attributes/'.$productDetails->id) }}" method="post">{{ csrf_field() }}
+                <table class="table table-bordered data-table">
+                  <thead>
+                    <tr>
+                      <th>Attribute ID</th>
+                      <th>SKU</th>
+                      <th>Size</th>
+                      <th>Price</th>
+                      <th>Stock</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php /*echo "<pre>"; print_r($productDetails->attributes); die;*/ ?>
+                    @foreach($productDetails->attributes as $attribute)
+                    <tr class="gradeX">
+                      <td class="center"><input type="hidden" name="idAttr[]" value="{{ $attribute->id }}">{{ $attribute->id }}</td>
+                      <td class="center">{{ $attribute->sku }}</td>
+                      <td class="center">{{ $attribute->size }}</td>
+                      <td class="center"><input name="price[]" type="text" value="{{ $attribute->price }}" /></td>
+                      <td class="center"><input name="stock[]" type="text" value="{{ $attribute->stock }}" required /></td> 
+                      <td class="center">
+                        <input type="submit" value="Update" class="btn btn-primary btn-mini" />
+                        <?php /* <a rel="{{ $attribute->id }}" rel1="delete-attribute" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a> */ ?>
+                        <a rel="{{$attribute->id}}" rel1="delete-attribute" href="javascript:"  class="deleteAttrRecord btn btn-danger btn-mini">Delete</a>
+                      </td>
+  
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 
