@@ -11,12 +11,18 @@
 |
 */
 
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+// Route::get('/', function () {
+//     coming soon
+// });
+
+Route::get('/','IndexController@index');
 
 
 
