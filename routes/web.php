@@ -22,13 +22,19 @@ use App\Http\Controllers\ProductController;
 //     coming soon
 // });
 
+//home poage
 Route::get('/','IndexController@index');
 
 
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+//listing page
+Route::get('/products/{url}', 'ProductController@products');
+
 
 
 
