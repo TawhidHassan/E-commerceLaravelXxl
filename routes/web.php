@@ -32,10 +32,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//listing page
+//category/listing page
 Route::get('/products/{url}', 'ProductController@products');
 
-
+//product details page
+Route::get('/product/{url}', 'ProductController@product');
 
 
 Route::get('/admin','AdminController@login')->name('admin.login');

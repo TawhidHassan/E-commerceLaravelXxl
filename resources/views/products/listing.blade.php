@@ -148,7 +148,7 @@
                                         <img src="{{asset('images/backend_images/products/small/'.$product->image)}}" alt="" />
                                     <h2>Tk.{{$product->price}}</h2>
                                         <p>{{$product->name}}</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a href="{{url('product/'.$product->id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
                                     {{-- <div class="product-overlay">
                                         <div class="overlay-content">

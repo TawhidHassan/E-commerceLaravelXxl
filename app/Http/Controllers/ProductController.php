@@ -182,7 +182,7 @@ class ProductController extends Controller
         if(file_exists($small_image_path.$productImage->image)){
             unlink($small_image_path.$productImage->image);
         }
-
+ 
         // Delete Image from Products table
         Product::where(['id'=>$id])->update(['image'=>'']);
 
@@ -263,6 +263,17 @@ class ProductController extends Controller
 			}
 
 			return view('products.listing')->with(compact('categories','categoryDetails','productsAll'));
+	}
+
+	public function product($id=null)
+	{
+		//get product data by id
+		$productDetails=Product::where(['id'=>$id])->first();
+		
+		 //get category and sub cetgory
+		 $categories=Category::with('categories')->where(['parent_id'=>0])->get();
+		return view('products.detail')->with(compact('productDetails','categories'));
+
 	}
 
 }
