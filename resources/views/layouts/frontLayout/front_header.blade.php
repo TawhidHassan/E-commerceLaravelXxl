@@ -96,8 +96,11 @@ $mainCategories =  Controller::mainCategories();
                             <li class="dropdown"><a href="#">Category<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     @foreach ($mainCategories as $cat)
+                                    @if ($cat->status==1)
                                 <li><a href="{{asset('/products/'.$cat->url)}}">{{$cat->name}}</a></li>
+                                @endif
                                     @endforeach
+
                                     
                                 </ul>
                             </li> 
