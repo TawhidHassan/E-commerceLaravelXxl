@@ -265,15 +265,28 @@ class ProductController extends Controller
 			return view('products.listing')->with(compact('categories','categoryDetails','productsAll'));
 	}
 
+
+	//product details page
 	public function product($id=null)
 	{
 		//get product data by id
-		$productDetails=Product::where(['id'=>$id])->first();
+		$productDetails=Product::with('attributes')->where(['id'=>$id])->first();
 		
 		 //get category and sub cetgory
 		 $categories=Category::with('categories')->where(['parent_id'=>0])->get();
 		return view('products.detail')->with(compact('productDetails','categories'));
 
+	}
+
+	//get prodiuct price by size
+	public function productPrice(Request $request)
+	{
+		$data=$request->all();
+		// echo "<pre>"; print_r($data);
+		$proArr=explode("-",$data['idSize']);
+		$proAttr=ProductsAttribute::where(['product_id'=>$proArr[0],'size'=>$proArr[1]])->first();
+		$price=$proAttr->price;
+		echo $price;
 	}
 
 }
