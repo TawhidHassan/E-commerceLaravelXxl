@@ -76,6 +76,7 @@
                         <p>Fabric: </p>
                         <p>Material: </p>
                         <p>Description: {{ $product->description }}</p>
+                        <p>care: {{ $product->care }}</p>
                       </div>
                     </div>
                 @endforeach

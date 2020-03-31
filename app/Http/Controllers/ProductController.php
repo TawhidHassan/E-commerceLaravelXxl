@@ -12,7 +12,7 @@ use Intervention\Image\Facades\Image;
 class ProductController extends Controller
 {
 	public function viewProducts(){
-		$products = Product::get();
+		$products = Product::orderby('id','DESC')->get();
 		// $products = json_decode(json_encode($products));
 		foreach($products as $key => $val){
 			$category_name = Category::where(['id'=>$val->category_id])->first();
@@ -42,6 +42,11 @@ class ProductController extends Controller
     			$product->description = $data['description'];
     		}else{
 				$product->description = '';    			
+    		}
+    		if(!empty($data['care'])){
+    			$product->care = $data['care'];
+    		}else{
+				$product->care = '';    			
     		}
     		$product->price = $data['price'];
 
@@ -117,11 +122,17 @@ class ProductController extends Controller
 			{
 				$data['description']="";
 			}
+
+			if(empty($data['care']))
+			{
+				$data['care']="";
+			}
 			Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],
 			'product_name'=>$data['product_name'],
 			'product_code'=>$data['product_code'],
 			'product_color'=>$data['product_color'],
 			'description'=>$data['description'],
+			'care'=>$data['care'],
 			'price'=>$data['price'],
 			'image'=>$filename,
 			]);

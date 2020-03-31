@@ -59,12 +59,12 @@
                   <textarea name="description">{{ $productDetails->description }}</textarea>
                 </div>
               </div>
-              {{-- <div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Material & Care</label>
                 <div class="controls">
                   <textarea name="care">{{ $productDetails->care }}</textarea>
                 </div>
-              </div> --}}
+              </div>
               {{-- <div class="control-group">
                 <label class="control-label">Sleeve</label>
                 <div class="controls">
