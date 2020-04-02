@@ -351,5 +351,35 @@ class ProductController extends Controller
         return view('admin.products.add_iamges')->with(compact('title','productDetails','category_name','productImages'));
     }
 	
+	public function deleteProductAltImage($id=null){
+
+        // Get Product Image
+        $productImage = ProductsImage::where('id',$id)->first();
+
+        // Get Product Image Paths
+        $large_image_path = 'images/backend_images/product/large/';
+        $medium_image_path = 'images/backend_images/product/medium/';
+        $small_image_path = 'images/backend_images/product/small/';
+
+        // Delete Large Image if not exists in Folder
+        if(file_exists($large_image_path.$productImage->image)){
+            unlink($large_image_path.$productImage->image);
+        }
+
+        // Delete Medium Image if not exists in Folder
+        if(file_exists($medium_image_path.$productImage->image)){
+            unlink($medium_image_path.$productImage->image);
+        }
+
+        // Delete Small Image if not exists in Folder
+        if(file_exists($small_image_path.$productImage->image)){
+            unlink($small_image_path.$productImage->image);
+        }
+
+        // Delete Image from Products Images table
+        ProductsImage::where(['id'=>$id])->delete();
+
+        return redirect()->back()->with('flash_message_success', 'Product alternate mage has been deleted successfully');
+    }
 }
 

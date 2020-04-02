@@ -72,7 +72,7 @@ Route::group(['middleware'=>['auth','admin']], function () {
 
      // product attributes
      Route::match(['get','post'],'/admin/add-images/{id}','ProductController@addImages');
-     Route::get('/admin/delete-images/{id}','ProductController@deleteImages');
+     Route::get('/admin/delete-alt-image/{id}','ProductController@deleteProductAltImage');
 
 
 });
