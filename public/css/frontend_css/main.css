@@ -1171,11 +1171,11 @@ h2.title {
   position: relative;
 }
 
-.view-product img {
+/* .view-product img {
   border: 1px solid #F7F7F0;
-  /* height: 380px; */
+  height: 380px;
   width: 100%;
-}
+} */
 
 .view-product h3 {
   background: #FE980F;

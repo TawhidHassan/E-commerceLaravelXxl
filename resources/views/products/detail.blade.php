@@ -11,39 +11,35 @@
                 <div class="product-details"><!--product-details-->
                     <div class="col-sm-5">
                         <div class="view-product">
-                            <img src="{{asset('images/backend_images/products/small/'.$productDetails->image)}}" alt="" />
-                            <h3>ZOOM</h3>
+                            <div class="easyzoom easyzoom--overlay easyzoom--with-thumbnails">
+								<a id="mainImgLarge" href="{{ asset('/images/backend_images/products/large/'.$productDetails->image) }}">
+									<img style="width:300px" id="mainImg" src="{{ asset('/images/backend_images/products/medium/'.$productDetails->image) }}" alt="" />
+								</a>
+								</div>
                         </div>
                         <div id="similar-product" class="carousel slide" data-ride="carousel">
-                            
-                              <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                      <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                      <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="item">
-                                      <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                                      <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                                    </div>
-                                    
-                                </div>
+								
+                            <!-- Wrapper for slides -->
+                              <div class="carousel-inner">
+                                  @if(count($productAltImages)>0)
+                                  <div class="item active thumbnails">
+                                          @foreach($productAltImages as $altimg)
+                                          <a href="{{ asset('images/backend_images/products/medium/'.$altimg->image) }}" data-standard="{{ asset('images/backend_images/products/small/'.$altimg->image) }}">
+                                            <img class="changeImage" style="width:80px; cursor:pointer" src="{{ asset('images/backend_images/products/small/'.$altimg->image) }}" alt="">
+                                      </a>                                            
+                                          @endforeach
+                                  </div>
+                                  @endif
+                              </div>
 
-                              <!-- Controls -->
-                              <a class="left item-control" href="#similar-product" data-slide="prev">
-                                <i class="fa fa-angle-left"></i>
-                              </a>
-                              <a class="right item-control" href="#similar-product" data-slide="next">
-                                <i class="fa fa-angle-right"></i>
-                              </a>
-                        </div>
+                            <!-- Controls -->
+                            <!-- <a class="left item-control" href="#similar-product" data-slide="prev">
+                              <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a class="right item-control" href="#similar-product" data-slide="next">
+                              <i class="fa fa-angle-right"></i>
+                            </a> -->
+                      </div>
 
                     </div>
                     <div class="col-sm-7">

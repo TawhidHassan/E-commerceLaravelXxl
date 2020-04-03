@@ -300,7 +300,12 @@ class ProductController extends Controller
 		
 		 //get category and sub cetgory
 		 $categories=Category::with('categories')->where(['parent_id'=>0])->get();
-		return view('products.detail')->with(compact('productDetails','categories'));
+
+		 $productAltImages= ProductsImage::where(['product_id' => $id])->get();
+		//  $productAltImages=json_decode(json_encode($productAltImages));
+		// 	echo "<pre>"; print_r($productAltImages);die;
+
+		return view('products.detail')->with(compact('productDetails','categories','productAltImages'));
 
 	}
 
