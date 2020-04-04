@@ -45,7 +45,16 @@ $(document).ready(function(){
 			data:{idSize:idSize},
 			success:function(resp){
 				// alert(resp);
-				$("#getPrice").html("Tk "+resp);
+				var arr =resp.split('#');
+				$("#getPrice").html("Tk "+arr[0]);
+				if(arr[1]==0)
+				{
+					$("#cartButton").hide();
+					$("#Availability").text("Out of stock");
+				}else{
+					$("#cartButton").show();
+					$("#Availability").text("In stock");
+				}
 			},
 			error:function(){
 				alert("error");
