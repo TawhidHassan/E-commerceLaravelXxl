@@ -319,9 +319,21 @@ class ProductController extends Controller
 		//  $productAltImages=json_decode(json_encode($productAltImages));
 		// 	echo "<pre>"; print_r($productAltImages);die;
 
+		//product stock calculation
 		$totla_stock=ProductsAttribute::where('product_id',$id)->sum('stock');
 
-		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock'));
+		//related  same category product
+		$relatedProducts=Product::where('id',"!=",$id)->where(['category_id'=>$productDetails->category_id])->get();
+	    // $relatedProducts=json_decode(json_encode($relatedProducts));
+		// echo "<pre>"; print_r($relatedProducts);die;
+		/*foreach($relatedProducts->chunk(3) as $chunk){
+            foreach($chunk as $item){
+                echo $item; echo "<br>"; 
+            }   
+            echo "<br><br><br>";
+        }*/
+        
+		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock','relatedProducts'));
 
 	}
 
