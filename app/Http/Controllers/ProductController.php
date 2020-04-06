@@ -48,7 +48,12 @@ class ProductController extends Controller
     			$product->care = $data['care'];
     		}else{
 				$product->care = '';    			
-    		}
+			}
+			if(empty($data['status'])){
+                $status='0';
+            }else{
+                $status='1';
+            }
     		$product->price = $data['price'];
 
     		// Upload Image
@@ -71,6 +76,7 @@ class ProductController extends Controller
     			}
     		}
 
+			$product->status = $status;
     		$product->save();
     		/*return redirect()->back()->with('flash_message_success','Product has been added successfully!');*/
             return redirect('/admin/view-products')->with('flash_message_success','Product has been added successfully!');
@@ -128,6 +134,12 @@ class ProductController extends Controller
 			{
 				$data['care']="";
 			}
+			if(empty($data['status'])){
+                $status='0';
+            }else{
+                $status='1';
+            }
+
 			Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],
 			'product_name'=>$data['product_name'],
 			'product_code'=>$data['product_code'],
@@ -136,6 +148,7 @@ class ProductController extends Controller
 			'care'=>$data['care'],
 			'price'=>$data['price'],
 			'image'=>$filename,
+			'status'=>$status,
 			]);
 			return redirect()->back()->with('flash_message_success','product updated Successfully!');
 
@@ -295,11 +308,11 @@ class ProductController extends Controller
     		foreach($subCategories as $subcat){
     			$cat_ids[] = $subcat->id;
     		}
-			$productsAll = Product::whereIn('products.category_id', $cat_ids)->get();
+			$productsAll = Product::whereIn('products.category_id', $cat_ids)->where('status',1)->get();
 		
 			}else{
 				//if url is sub category url
-				$productsAll=Product::where(['category_id'=>$categoryDetails->id])->get();
+				$productsAll=Product::where(['category_id'=>$categoryDetails->id])->where('status',1)->get();
 			}
 
 			return view('products.listing')->with(compact('categories','categoryDetails','productsAll'));
@@ -309,6 +322,14 @@ class ProductController extends Controller
 	//product details page
 	public function product($id=null)
 	{
+
+		//show 404 page if product is disable
+		$productCount=Product::where(['id'=>$id,'status'=>1])->count();
+		if($productCount==0)
+		{
+			abort(404);
+		}
+
 		//get product data by id
 		$productDetails=Product::with('attributes')->where(['id'=>$id])->first();
 		
