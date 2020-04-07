@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
-use App\ProductsAttribute;
 use App\ProductsImage;
+use App\ProductsAttribute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 
@@ -437,6 +439,28 @@ class ProductController extends Controller
         ProductsImage::where(['id'=>$id])->delete();
 
         return redirect()->back()->with('flash_message_success', 'Product alternate mage has been deleted successfully');
-    }
+	}
+	
+	public function addToCart(Request $request)
+	{
+		$data = $request->all();
+        /*echo "<pre>"; print_r($data); die;*/
+		if(empty(Auth::user()->email)){
+            $data['user_email'] = '';    
+        }else{
+            $data['user_email'] = Auth::user()->email;
+		}
+		if(empty($data['session_id'])){
+			$data['session_id'] = '';    
+		}
+		$sizeArr=explode("-",$data['size']);
+		DB::table('cart')
+        ->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
+            'product_code' =>$data['product_code'],'product_color' => $data['product_color'],
+			'price' => $data['price'],'size' =>$sizeArr[1],'quantity' => $data['quantity'],
+			'user_email' => $data['user_email'],'session_id' => $data['session_id']]);
+
+       
+	}
 }
 

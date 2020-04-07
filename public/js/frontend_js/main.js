@@ -47,6 +47,7 @@ $(document).ready(function(){
 				// alert(resp);
 				var arr =resp.split('#');
 				$("#getPrice").html("Tk "+arr[0]);
+				$("#price").val(arr[0]);
 				if(arr[1]==0)
 				{
 					$("#cartButton").hide();

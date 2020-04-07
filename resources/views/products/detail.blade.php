@@ -40,47 +40,56 @@
                               <i class="fa fa-angle-right"></i>
                             </a> -->
                       </div>
-
                     </div>
-                    <div class="col-sm-7">
-                        <div class="product-information"><!--/product-information-->
-                            <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                            <h2>{{$productDetails->product_name}}</h2>
-                            <p>Web ID: {{$productDetails->product_code}}</p>
-                            <p>
-                                <select id="selsize" name="size" style="width:150px">
-                                    <option value="">select</option>
-                                    @foreach ($productDetails->attributes as $size)
-                                <option value="{{$productDetails->id}}-{{$size->size}}">{{$size->size}}</option>
-                                    @endforeach
-                                </select>
-                            </p>
-                            <img src="images/product-details/rating.png" alt="" />
-                            <span>
-                                <span id="getPrice">Tk.{{$productDetails->price}}</span>
-                                <label>Quantity:</label>
-                                <input type="text" value="3" />
-                                @if ($totla_stock>0)    
-                                <button type="button" class="btn btn-fefault cart" id="cartButton">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button>
+                    <form name="addtoCartForm" id="addtoCartForm" action="{{ url('add-cart') }}" method="post">{{ csrf_field() }}
+                        <input type="hidden" name="product_id" value="{{ $productDetails->id }}">
+                        <input type="hidden" name="product_name" value="{{ $productDetails->product_name }}">
+                        <input type="hidden" name="product_code" value="{{ $productDetails->product_code }}">
+                        <input type="hidden" name="product_color" value="{{ $productDetails->product_color }}">
+                        <input type="hidden" name="price" id="price" value="{{ $productDetails->price }}">
+                        <div class="col-sm-7">
+                            <div class="product-information"><!--/product-information-->
+                                <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                                <h2>{{$productDetails->product_name}}</h2>
+                                <p>Web ID: {{$productDetails->product_code}}</p>
+                                <p>
+                                    <select id="selsize" name="size" style="width:150px">
+                                        <option value="">select</option>
+                                        @foreach ($productDetails->attributes as $size)
+                                    <option value="{{$productDetails->id}}-{{$size->size}}">{{$size->size}}</option>
+                                        @endforeach
+                                    </select>
+                                </p>
+                                <img src="images/product-details/rating.png" alt="" />
+                                <span>
+                                    <span id="getPrice">Tk.{{$productDetails->price}}</span>
+                                    <label>Quantity:</label>
+                                    <input type="text" name="quantity" value="1" />
+                                    @if ($totla_stock>0)    
+                                    <button type="submit" class="btn btn-fefault cart" id="cartButton">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Add to cart
+                                    </button>
+                                    @endif
+                                </span>
+                                
+                                <p><b>Availability:</b><spanm id="Availability">
+                                    @if ($totla_stock>0)
+                                    In Stock
+                                @else
+                                Out of Stock
                                 @endif
-                            </span>
-                            
-                            <p><b>Availability:</b><spanm id="Availability">
-                                @if ($totla_stock>0)
-                                In Stock
-                            @else
-                            Out of Stock
-                            @endif
-                        </span></p>
-                            <p><b>Condition:</b> New</p>
-                            <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
-                        </div><!--/product-information-->
-                    </div>
+                            </span></p>
+                                <p><b>Condition:</b> New</p>
+                                <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+                            </div><!--/product-information-->
+                        </div>
+                    </form>
                 </div><!--/product-details-->
                 
+               
+            </div><!--/product-details-->
+
                 <div class="category-tab shop-details-tab"><!--category-tab-->
                     <div class="col-sm-12">
                         <ul class="nav nav-tabs">
