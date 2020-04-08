@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
@@ -450,17 +451,31 @@ class ProductController extends Controller
         }else{
             $data['user_email'] = Auth::user()->email;
 		}
-		if(empty($data['session_id'])){
-			$data['session_id'] = '';    
-		}
+		
+		$session_id = Session::get('session_id');
+        if(!isset($session_id)){
+            $session_id = str_random(40);
+            Session::put('session_id',$session_id);
+        }
+
+
 		$sizeArr=explode("-",$data['size']);
 		DB::table('cart')
         ->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
             'product_code' =>$data['product_code'],'product_color' => $data['product_color'],
 			'price' => $data['price'],'size' =>$sizeArr[1],'quantity' => $data['quantity'],
-			'user_email' => $data['user_email'],'session_id' => $data['session_id']]);
-
+			'user_email' => $data['user_email'],'session_id' =>$session_id]);
+			return redirect('cart')->with('flash_message_success','Product has been added in Cart!');
        
+	}
+
+	public function cart(Request $request)
+	{
+		
+		$session_id=Session::get('session_id');
+		$userCart=DB::table('cart')->where(['session_id'=>$session_id])->get();
+
+		return view('products.cart')->with(compact('userCart'));
 	}
 }
 

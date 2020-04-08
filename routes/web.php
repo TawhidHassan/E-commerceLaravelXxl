@@ -38,8 +38,11 @@ Route::get('/products/{url}', 'ProductController@products');
 //product details page
 Route::get('/product/{url}', 'ProductController@product');
 
-//product add to cart page
+//Add to cart page
 Route::match(['get','post'],'/add-cart','ProductController@addToCart');
+
+//product add to cart page
+Route::match(['get','post'],'/cart','ProductController@cart');
 
 //product details page get product price by size
 Route::get('/get-product-price', 'ProductController@productPrice');
