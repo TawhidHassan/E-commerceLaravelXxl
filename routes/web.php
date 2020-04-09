@@ -43,6 +43,9 @@ Route::match(['get','post'],'/add-cart','ProductController@addToCart');
 
 //product add to cart page
 Route::match(['get','post'],'/cart','ProductController@cart');
+//delete cart
+Route::get('/cart/delete-product/{id}', 'ProductController@deleteCartProduct');
+
 
 //product details page get product price by size
 Route::get('/get-product-price', 'ProductController@productPrice');
