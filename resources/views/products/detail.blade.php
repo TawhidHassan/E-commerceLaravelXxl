@@ -4,9 +4,16 @@
 <section>
     <div class="container">
         <div class="row">
+        @if(Session::has('flash_message_error'))
+            <div class="alert alert-error alert-block" style="background-color:#d7efe5">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                    <strong>{!! session('flash_message_error') !!}</strong>
+            </div>
+        @endif   
             <div class="col-sm-3">
-                @include('layouts.frontLayout.front_sidebar')
-             </div>
+                @include('layouts.frontLayout.front_sidebar')	
+            </div>
+            
             <div class="col-sm-9 padding-right">
                 <div class="product-details"><!--product-details-->
                     <div class="col-sm-5">

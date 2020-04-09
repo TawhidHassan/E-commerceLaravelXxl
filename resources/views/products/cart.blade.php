@@ -41,7 +41,7 @@
                             </td>
                             <td class="cart_description">
                                 <h4><a href="">{{ $cart->product_name }}</a></h4>
-                                <p>Product Code: {{ $cart->product_code }}</p>
+                                <p>Product Code: {{ $cart->product_code }} |  {{ $cart->size}}</p>
                             </td>
                             <td class="cart_price">
                                 <p>INR {{ $cart->price }}</p>

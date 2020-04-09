@@ -457,14 +457,22 @@ class ProductController extends Controller
             $session_id = str_random(40);
             Session::put('session_id',$session_id);
         }
-
-
 		$sizeArr=explode("-",$data['size']);
-		DB::table('cart')
-        ->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
-            'product_code' =>$data['product_code'],'product_color' => $data['product_color'],
-			'price' => $data['price'],'size' =>$sizeArr[1],'quantity' => $data['quantity'],
-			'user_email' => $data['user_email'],'session_id' =>$session_id]);
+		$product_size = $sizeArr[1];
+		$countProducts = DB::table('cart')->where(['product_id' => $data['product_id'],'product_color' => $data['product_color'],'size' => $product_size,'session_id' => $session_id])->count();
+		
+		if($countProducts>0)
+		{
+			return redirect()->back()->with('flash_message_error','Product has been already  added to Cart!');
+		}else{
+			DB::table('cart')
+			->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
+				'product_code' =>$data['product_code'],'product_color' => $data['product_color'],
+				'price' => $data['price'],'size' =>$product_size,'quantity' => $data['quantity'],
+				'user_email' => $data['user_email'],'session_id' =>$session_id]);
+		}
+
+		
 			return redirect('cart')->with('flash_message_success','Product has been added in Cart!');
        
 	}
@@ -489,6 +497,12 @@ class ProductController extends Controller
 
 		DB::table('cart')->where('id',$id)->delete();
         return redirect('cart')->with('flash_message_success','Product has been deleted in Cart!');
+
+	}
+	public function updateCartProductQuantity($id=null,$quantity){
+
+		DB::table('cart')->where('id',$id)->increment('quantity',$quantity); 
+		return redirect('cart')->with('flash_message_success','Product Quantity has been updated in Cart!'); 
 
 	}
 }
