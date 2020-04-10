@@ -139,7 +139,7 @@
                         <li>Cart Sub Total <span>$59</span></li>
                         <li>Eco Tax <span>$2</span></li>
                         <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span>$61</span></li>
+                    <li>Total <span>Tk. <?php echo $total_amount; ?></span></li>
                     </ul>
                         <a class="btn btn-default update" href="">Update</a>
                         <a class="btn btn-default check_out" href="">Check Out</a>
