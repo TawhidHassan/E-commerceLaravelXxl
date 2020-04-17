@@ -51,6 +51,9 @@ Route::get('/cart/update-quantity/{id}/{quantity}', 'ProductController@updateCar
 //product details page get product price by size
 Route::get('/get-product-price', 'ProductController@productPrice');
 
+// Apply Coupon
+Route::post('/cart/apply-coupon','ProductController@applyCoupon');
+
 
 Route::get('/admin','AdminController@login')->name('admin.login');
 

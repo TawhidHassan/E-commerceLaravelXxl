@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Product;
 use App\Category;
 use App\ProductsImage;
@@ -10,8 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -516,6 +517,31 @@ class ProductController extends Controller
         }
 		
 
+	}
+
+	public function applyCoupon(Request $request){
+		$data = $request->all();
+        /*echo "<pre>"; print_r($data); die;*/
+        $couponCount = Coupon::where('coupon_code',$data['coupon_code'])->count();
+        if($couponCount == 0){
+            return redirect()->back()->with('flash_message_error','This coupon does not exists!');
+        }else{
+
+			 // Get Coupon Details
+			 $couponDetails = Coupon::where('coupon_code',$data['coupon_code'])->first();
+			// If coupon is Inactive
+			if($couponDetails->status==0){
+				return redirect()->back()->with('flash_message_error','This coupon is not active!');
+			}
+			
+			// If coupon is Expired
+            $expiry_date = $couponDetails->expiry_date;
+            $current_date = date('Y-m-d');
+            if($expiry_date < $current_date){
+                return redirect()->back()->with('flash_message_error','This coupon is expired!');
+            }
+
+		}
 	}
 }
 
