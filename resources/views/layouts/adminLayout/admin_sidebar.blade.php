@@ -15,11 +15,19 @@
             </ul>
         </li>
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Coupons</span> <span class="label label-important">2</span></a>
-            <ul style="display: block;">
-              <li><a href="{{ url('/admin/add-coupon')}}">Add Coupon</a></li>
-              <li><a href="{{ url('/admin/view-coupons')}}">View Coupons</a></li>
+            <ul>
+                <li><a href="{{ url('/admin/add-coupon')}}">Add Coupon</a></li>
+                <li><a href="{{ url('/admin/view-coupons')}}">View Coupons</a></li>
             </ul>
-          </li>
+        </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Banners</span> <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-banner')}}">Add Banner</a></li>
+              <li><a href="{{ url('/admin/view-banners')}}">View Banners</a></li>
+            </ul>
+        </li>
+       
+         
         <li><a href="buttons.html"><i class="icon icon-tint"></i> <span>Buttons &amp; icons</span></a></li>
     </ul>
 </div>
