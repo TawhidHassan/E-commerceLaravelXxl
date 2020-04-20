@@ -57,6 +57,9 @@ Route::post('/cart/apply-coupon','ProductController@applyCoupon');
 
 Route::get('/admin','AdminController@login')->name('admin.login');
 
+// Users Login/Register Page
+Route::get('/login-register','UserController@userLoginRegister');
+
 
 Route::group(['middleware'=>['auth','admin']], function () {
 
