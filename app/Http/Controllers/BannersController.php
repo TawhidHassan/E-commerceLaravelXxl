@@ -42,7 +42,7 @@ class BannersController extends Controller
 			return redirect()->back()->with('flash_message_success', 'Banner has been added successfully');
     	}
     	
-    	return view('admin.banners.add_banner');
+    	return view('admin.banners.add_banners');
     }
 
     public function editBanner(Request $request, $id=null){

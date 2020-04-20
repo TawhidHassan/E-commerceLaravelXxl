@@ -6,23 +6,17 @@
             <div class="col-sm-12">
                 <div id="slider-carousel" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#slider-carousel" data-slide-to="1"></li>
-                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        @foreach($banners as $key => $banner)
+							<li data-target="#slider-carousel" data-slide-to="0" @if($key==0) class="active" @endif></li>
+						@endforeach
                     </ol>
                     
                     <div class="carousel-inner">
-                        <div class="item active">
-                            <img src="{{asset('images/frontend_images/banners/tsirt.png')}}">
-                        </div>
-                        <div class="item">
-                            <img src="{{asset('images/frontend_images/banners/tsirt.png')}}">
-                        </div>
-                        
-                        <div class="item">
-                            <img src="{{asset('images/frontend_images/banners/tsirt.png')}}">
-                        </div>
-                        
+                        @foreach($banners as $key => $banner)
+						<div class="item @if($key==0) active @endif">
+							<a href="{{ $banner->link }}" title="Banner 1"><img src="images/frontend_images/banners/{{ $banner->image }}"></a>
+						</div>
+						@endforeach
                     </div>
                     
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
