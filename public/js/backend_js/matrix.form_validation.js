@@ -112,6 +112,7 @@ $(document).ready(function(){
     });
 
 
+
 	// Add Product Validation
     $("#add_product").validate({
 		rules:{

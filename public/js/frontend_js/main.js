@@ -30,6 +30,7 @@ $(document).ready(function(){
 });
 
 
+//price are cahge on diffarent product size
 $(document).ready(function(){
 
 	//price are cahge on diffarent product size
@@ -66,6 +67,9 @@ $(document).ready(function(){
 	
 
 });
+
+//main image are change by sub image
+	// Change Image
 $(document).ready(function(){
 	//main image are change by sub image
 	// Change Image
@@ -78,6 +82,8 @@ $(document).ready(function(){
 	});
 });
 
+
+//''''''''''''''''''''esay zoom start.......................................
 // Instantiate EasyZoom instances
 var $easyzoom = $('.easyzoom').easyZoom();
 
@@ -86,9 +92,7 @@ var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
 
 $('.thumbnails').on('click', 'a', function(e) {
 	var $this = $(this);
-
 	e.preventDefault();
-
 	// Use EasyZoom's `swap` method
 	api1.swap($this.data('standard'), $this.attr('href'));
 });
@@ -107,3 +111,47 @@ $('.toggle').on('click', function() {
 		api2._init();
 	}
 });
+///..........................esay zoom end.................
+
+
+	
+	$(document).ready(function(){
+	
+	// Validate Register form on keyup and submit
+	$("#registerForm").validate({
+		rules:{
+			name:{
+				required:true,
+				minlength:2,
+				accept: "[a-zA-Z]+"
+			},
+			password:{
+				required:true,
+				minlength:6
+			},
+			email:{
+				required:true,
+				email:true,
+				remote:"/check-email"
+			}
+		},
+		messages:{
+			name:{ 
+				required:"Please enter your Name",
+				minlength: "Your Name must be atleast 2 characters long",
+				accept: "Your Name must contain letters only"		
+			}, 
+			password:{
+				required:"Please provide your Password",
+				minlength: "Your Password must be atleast 6 characters long"
+			},
+			email:{
+				required: "Please enter your Email",
+				email: "Please enter valid Email",
+				remote: "Email already exists!"
+			}
+		}
+	});
+	
+	});
+	// Validate Register form on keyup and submit
