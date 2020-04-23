@@ -152,6 +152,14 @@ $('.toggle').on('click', function() {
 			}
 		}
 	});
+
+	// Password Strength Script
+	$('#myPassword').passtrength({
+		minChars: 4,
+		passwordToggle: true,
+		tooltip: true,
+		eyeImg : "/images/frontend_images/eye.svg"
+	  });
 	
 	});
 	// Validate Register form on keyup and submit
