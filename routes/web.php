@@ -14,6 +14,7 @@
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ProductController;
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -73,6 +74,12 @@ Route::post('user-login','UserController@login');
 Route::get('/user-logout','UserController@logout'); 
 
 
+///to prevent all route after login
+Route::group(['middleware' => ['frontlogin']], function () {
+    // Users Accounts
+    Route::match(['get', 'post'], '/account','UserController@account'); 
+    
+});
 
 Route::group(['middleware'=>['auth','admin']], function () {
 

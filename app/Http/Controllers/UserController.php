@@ -35,7 +35,7 @@ class UserController extends Controller
                 $user->save();
 
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                
+                    Session::put('frontSession',$data['email']);
                     return redirect('/cart');
                 }
                
@@ -65,7 +65,7 @@ class UserController extends Controller
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                
+                Session::put('frontSession',$data['email']);
                 return redirect('/cart');
             }else{
                 return redirect()->back()->with('flash_message_error','Invalid Username or Password!');
@@ -75,6 +75,14 @@ class UserController extends Controller
 
     public function logout(){
         Auth::logout();
+        Session::forget('frontSession');
         return redirect('/');
     }
+
+    public function account(){
+       
+        return view('users.account');
+    }
+
+
 }
