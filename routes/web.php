@@ -60,11 +60,18 @@ Route::get('/admin','AdminController@login')->name('admin.login');
 // Users Login/Register Page
 Route::get('/login-register','UserController@userLoginRegister');
 
+//check if user already exists
+Route::match(['get','post'],'/check-email','UserController@checkEmail');
+
 // Users Register Form Submit
 Route::post('/user-register','UserController@register');
 
-//check if user already exists
-Route::match(['get','post'],'/check-email','UserController@checkEmail');
+// Users Login Form Submit
+Route::post('user-login','UserController@login');
+
+// Users logout
+Route::get('/user-logout','UserController@logout'); 
+
 
 
 Route::group(['middleware'=>['auth','admin']], function () {

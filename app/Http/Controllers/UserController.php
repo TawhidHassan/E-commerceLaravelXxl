@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -22,8 +25,24 @@ class UserController extends Controller
     			return redirect()->back()->with('flash_message_error','Email already exists!');
     		}else{
 
-                return redirect()->back()->with('flash_message_success','Please confirm your email to activate your account!');               
-    		}	
+                $user = new User;
+                $user->name = $data['name'];
+                $user->email = $data['email'];
+                $user->password = bcrypt($data['password']);
+                date_default_timezone_set('Asia/Dhaka');
+                $user->created_at = date("Y-m-d H:i:s");
+                $user->updated_at = date("Y-m-d H:i:s");
+                $user->save();
+
+                if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+                
+                    return redirect('/cart');
+                }
+               
+            }	
+            
+
+
     	}
     }
 
@@ -38,5 +57,24 @@ class UserController extends Controller
     }else{
         echo "true"; die;
     }		
+    }
+
+
+    public function login(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            /*echo "<pre>"; print_r($data); die;*/
+            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+                
+                return redirect('/cart');
+            }else{
+                return redirect()->back()->with('flash_message_error','Invalid Username or Password!');
+            }
+        }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/');
     }
 }
