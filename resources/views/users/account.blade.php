@@ -20,7 +20,7 @@
 				<div class="login-form">
 					<h2>Update Account</h2>
 					<form id="accountForm" name="accountForm" action="{{ url('/account') }}" method="POST">{{ csrf_field() }}
-						{{-- <input value="{{ $userDetails->email }}" readonly="" />
+						<input value="{{ $userDetails->email }}" readonly="" />
 						<input value="{{ $userDetails->name }}" id="name" name="name" type="text" placeholder="Name"/>
 						<input value="{{ $userDetails->address }}" id="address" name="address" type="text" placeholder="Address"/>
 						<input value="{{ $userDetails->city }}" id="city" name="city" type="text" placeholder="City"/>
@@ -33,7 +33,7 @@
 						</select>
 						<input value="{{ $userDetails->pincode }}" style="margin-top: 10px;" id="pincode" name="pincode" type="text" placeholder="Pincode"/>
 						<input value="{{ $userDetails->mobile }}" id="mobile" name="mobile" type="text" placeholder="Mobile"/>
-						<button type="submit" class="btn btn-default">Update</button> --}}
+						<button type="submit" class="btn btn-default">Update</button>
 					</form>
 				</div>
 			</div>

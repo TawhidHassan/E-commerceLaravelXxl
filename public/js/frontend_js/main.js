@@ -175,6 +175,53 @@ $('.toggle').on('click', function() {
 		}
 	});
 
+	// Validate Register form on keyup and submit
+	$("#accountForm").validate({
+		rules:{
+			name:{
+				required:true,
+				minlength:2,
+				accept: "[a-zA-Z]+"
+			},
+			address:{
+				required:true,
+				minlength:6
+			},
+			city:{
+				required:true,
+				minlength:2
+			},
+			state:{
+				required:true,
+				minlength:2
+			},
+			country:{
+				required:true
+			}
+		},
+		messages:{
+			name:{ 
+				required:"Please enter your Name",
+				minlength: "Your Name must be atleast 2 characters long",
+				accept: "Your Name must contain letters only"		
+			}, 
+			address:{
+				required:"Please provide your Address",
+				minlength: "Your Address must be atleast 10 characters long"
+			},
+			city:{
+				required:"Please provide your City",
+				minlength: "Your City must be atleast 2 characters long"
+			},
+			state:{
+				required:"Please provide your State",
+				minlength: "Your State must be atleast 2 characters long"
+			},
+			country:{
+				required:"Please select your Country"
+			},
+		}
+	});
 	
 	// Password Strength Script
 	$('#myPassword').passtrength({
