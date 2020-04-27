@@ -43,7 +43,8 @@
 			<div class="col-sm-4">
 				<div class="signup-form">
 					<h2>Update Password</h2>
-					<form id="passwordForm" name="passwordForm" action="{{ url('/update-user-pwd') }}" method="POST">{{ @csrf_field() }}
+					<form id="passwordForm" name="passwordForm" action="{{ url('/update-user-pwd') }}" method="POST">
+						{{ @csrf_field() }}
 						<input type="password" name="current_pwd" id="current_pwd" placeholder="Current Password">
 						<span id="chkPwd"></span>
 						<input type="password" name="new_pwd" id="new_pwd" placeholder="New Password">

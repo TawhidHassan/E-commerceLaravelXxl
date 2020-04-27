@@ -223,6 +223,30 @@ $('.toggle').on('click', function() {
 		}
 	});
 	
+
+// Check Current User Password
+$("#current_pwd").keyup(function(){
+	var current_pwd = $(this).val();
+	$.ajax({
+		headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+		type:'post',
+		url:'/check-user-pwd',
+		data:{current_pwd:current_pwd},
+		success:function(resp){
+			/*alert(resp);*/
+			if(resp=="false"){
+				$("#chkPwd").html("<font color='red'>Current Password is incorrect</font>");
+			}else if(resp=="true"){
+				$("#chkPwd").html("<font color='green'>Current Password is correct</font>");
+			}
+		},error:function(){
+			alert("Error");
+		}
+	});
+});
+
 	// Password Strength Script
 	$('#myPassword').passtrength({
 		minChars: 4,
