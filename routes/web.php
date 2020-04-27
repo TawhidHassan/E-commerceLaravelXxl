@@ -81,6 +81,8 @@ Route::group(['middleware' => ['frontlogin']], function () {
 
     //current password check
     Route::post('/check-user-pwd','UserController@chkUserPassword');
+    // Update User Password
+    Route::post('/update-user-pwd','UserController@updatePassword');
 
     
 });
