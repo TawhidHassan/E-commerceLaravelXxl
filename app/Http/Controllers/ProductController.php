@@ -8,6 +8,7 @@ use App\Country;
 use App\Product;
 use App\Category;
 use App\ProductsImage;
+use App\DeliveryAddress;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -592,7 +593,9 @@ class ProductController extends Controller
         $countries = Country::get();
 
 	
-		return view('products.checkout')->with(compact('userDetails','countries'));
+		$shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+
+		return view('products.checkout')->with(compact('userDetails','countries','shippingDetails'));
     }
 }
 

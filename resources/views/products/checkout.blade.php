@@ -57,7 +57,7 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>Ship To</h2>
-							{{-- <div class="form-group">
+							<div class="form-group">
 								<input name="shipping_name" id="shipping_name" @if(!empty($shippingDetails->name)) value="{{ $shippingDetails->name }}" @endif type="text" placeholder="Shipping Name" class="form-control" />
 							</div>
 							<div class="form-group">
@@ -76,13 +76,13 @@
 										<option value="{{ $country->country_name }}" @if(!empty($shippingDetails->country) && $country->country_name == $shippingDetails->country) selected @endif>{{ $country->country_name }}</option>
 									@endforeach
 								</select>
-							</div> --}}
-							{{-- <div class="form-group">
+							</div> 
+							 <div class="form-group">
 								<input name="shipping_pincode" id="shipping_pincode" @if(!empty($shippingDetails->pincode)) value="{{ $shippingDetails->pincode }}" @endif type="text" placeholder="Shipping Pincode" class="form-control" />
 							</div>
 							<div class="form-group">
 								<input name="shipping_mobile" id="shipping_mobile" @if(!empty($shippingDetails->mobile)) value="{{ $shippingDetails->mobile }}" @endif type="text" placeholder="Shipping Mobile" class="form-control" />
-							</div> --}}
+							</div>
 							<button type="submit" class="btn btn-default">Check Out</button>
 					</div><!--/sign up form-->
 				</div>

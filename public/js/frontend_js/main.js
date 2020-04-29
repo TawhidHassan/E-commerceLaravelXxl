@@ -224,59 +224,59 @@ $('.toggle').on('click', function() {
 	});
 	
 
-// Check Current User Password
-$("#current_pwd").keyup(function(){
-	var current_pwd = $(this).val();
-	$.ajax({
-		headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-		type:'post',
-		url:'/check-user-pwd',
-		data:{current_pwd:current_pwd},
-		success:function(resp){
-			/*alert(resp);*/
-			if(resp=="false"){
-				$("#chkPwd").html("<font color='red'>Current Password is incorrect</font>");
-			}else if(resp=="true"){
-				$("#chkPwd").html("<font color='green'>Current Password is correct</font>");
+	// Check Current User Password
+	$("#current_pwd").keyup(function(){
+		var current_pwd = $(this).val();
+		$.ajax({
+			headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+			type:'post',
+			url:'/check-user-pwd',
+			data:{current_pwd:current_pwd},
+			success:function(resp){
+				/*alert(resp);*/
+				if(resp=="false"){
+					$("#chkPwd").html("<font color='red'>Current Password is incorrect</font>");
+				}else if(resp=="true"){
+					$("#chkPwd").html("<font color='green'>Current Password is correct</font>");
+				}
+			},error:function(){
+				alert("Error");
 			}
-		},error:function(){
-			alert("Error");
+		});
+	});
+
+	//password validation
+	$("#passwordForm").validate({
+		rules:{
+			current_pwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			new_pwd:{
+				required: true,
+				minlength:6,
+				maxlength:20
+			},
+			confirm_pwd:{
+				required:true,
+				minlength:6,
+				maxlength:20,
+				equalTo:"#new_pwd"
+			}
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
 		}
 	});
-});
-
-//password validation
-$("#passwordForm").validate({
-	rules:{
-		current_pwd:{
-			required: true,
-			minlength:6,
-			maxlength:20
-		},
-		new_pwd:{
-			required: true,
-			minlength:6,
-			maxlength:20
-		},
-		confirm_pwd:{
-			required:true,
-			minlength:6,
-			maxlength:20,
-			equalTo:"#new_pwd"
-		}
-	},
-	errorClass: "help-inline",
-	errorElement: "span",
-	highlight:function(element, errorClass, validClass) {
-		$(element).parents('.control-group').addClass('error');
-	},
-	unhighlight: function(element, errorClass, validClass) {
-		$(element).parents('.control-group').removeClass('error');
-		$(element).parents('.control-group').addClass('success');
-	}
-});
 
 	// Password Strength Script
 	$('#myPassword').passtrength({
@@ -285,6 +285,34 @@ $("#passwordForm").validate({
 		tooltip: true,
 		eyeImg : "/images/frontend_images/eye.svg"
 	  });
+
+
+	  //chipping address copy to bill adress
+	$("#copyAddress").on('click',function(){
+		if(this.checked){
+    		$("#shipping_name").val($("#billing_name").val());
+    		$("#shipping_address").val($("#billing_address").val());
+    		$("#shipping_city").val($("#billing_city").val());
+    		$("#shipping_state").val($("#billing_state").val());
+    		$("#shipping_pincode").val($("#billing_pincode").val());
+    		$("#shipping_mobile").val($("#billing_mobile").val());
+    		$("#shipping_country").val($("#billing_country").val());
+    	}else{
+    		$("#shipping_name").val('');
+    		$("#shipping_address").val('');
+    		$("#shipping_city").val('');
+    		$("#shipping_state").val('');
+    		$("#shipping_pincode").val('');
+    		$("#shipping_mobile").val('');
+    		$("#shipping_country").val('');
+    	}
+	});
+
+
+
+
+
+	
 	
 	});
 	// Validate Register form on keyup and submit
