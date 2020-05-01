@@ -592,8 +592,43 @@ class ProductController extends Controller
         $userDetails = User::find($user_id);
         $countries = Country::get();
 
-	
-		$shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+
+		$shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
+        $shippingDetails = array();
+        if($shippingCount>0){
+            $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+        }
+
+
+		if($request->isMethod('post')){
+            $data = $request->all();
+            /*echo "<pre>"; print_r($data); die;*/
+            // Return to Checkout page if any of the field is empty
+            if(empty($data['billing_name']) || empty($data['billing_address']) || empty($data['billing_city']) || empty($data['billing_state']) || empty($data['billing_country']) || empty($data['billing_pincode']) || empty($data['billing_mobile']) || empty($data['shipping_name']) || empty($data['shipping_address']) || empty($data['shipping_city']) || empty($data['shipping_state']) || empty($data['shipping_country']) || empty($data['shipping_pincode']) || empty($data['shipping_mobile'])){
+                    return redirect()->back()->with('flash_message_error','Please fill all fields to Checkout!');
+			}
+
+		// Update User details
+		User::where('id',$user_id)->update(['name'=>$data['billing_name'],'address'=>$data['billing_address'],'city'=>$data['billing_city'],'state'=>$data['billing_state'],'pincode'=>$data['billing_pincode'],'country'=>$data['billing_country'],'mobile'=>$data['billing_mobile']]);
+		if($shippingCount>0){
+			// Update Shipping Address
+			DeliveryAddress::where('user_id',$user_id)->update(['name'=>$data['shipping_name'],'address'=>$data['shipping_address'],'city'=>$data['shipping_city'],'state'=>$data['shipping_state'],'pincode'=>$data['shipping_pincode'],'country'=>$data['shipping_country'],'mobile'=>$data['shipping_mobile']]);
+		}else{
+			// Add New Shipping Address
+			$shipping = new DeliveryAddress;
+			$shipping->user_id = $user_id;
+			$shipping->user_email = $user_email;
+			$shipping->name = $data['shipping_name'];
+			$shipping->address = $data['shipping_address'];
+			$shipping->city = $data['shipping_city'];
+			$shipping->state = $data['shipping_state'];
+			$shipping->pincode = $data['shipping_pincode'];
+			$shipping->country = $data['shipping_country'];
+			$shipping->mobile = $data['shipping_mobile'];
+			$shipping->save();
+		}
+		// return redirect()->action('ProductsController@orderReview');
+		}
 
 		return view('products.checkout')->with(compact('userDetails','countries','shippingDetails'));
     }
