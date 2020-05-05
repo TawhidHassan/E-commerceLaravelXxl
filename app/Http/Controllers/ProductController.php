@@ -594,6 +594,8 @@ class ProductController extends Controller
 
 
 		$shippingCount = DeliveryAddress::where('user_id',$user_id)->count();
+
+		//$shippingDetails variable as array so that Undefined variable error will not come as shown 
         $shippingDetails = array();
         if($shippingCount>0){
             $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
@@ -652,7 +654,7 @@ class ProductController extends Controller
             // $total_weight = $total_weight + $productDetails->weight;
         }
 
-
+		
 		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart'));
 	}
 }
