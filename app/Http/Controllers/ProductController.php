@@ -599,6 +599,9 @@ class ProductController extends Controller
             $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
         }
 
+		// Update cart table with user email
+        $session_id = Session::get('session_id');
+        DB::table('cart')->where(['session_id'=>$session_id])->update(['user_email'=>$user_email]);
 
 		if($request->isMethod('post')){
             $data = $request->all();
@@ -627,10 +630,30 @@ class ProductController extends Controller
 			$shipping->mobile = $data['shipping_mobile'];
 			$shipping->save();
 		}
-		// return redirect()->action('ProductsController@orderReview');
+		return redirect()->action('ProductController@orderReview');
 		}
 
 		return view('products.checkout')->with(compact('userDetails','countries','shippingDetails'));
-    }
+	}
+	
+
+	public function orderReview()
+	{
+		$user_id = Auth::user()->id;
+        $user_email = Auth::user()->email;
+        $userDetails = User::where('id',$user_id)->first();
+        $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
+        $shippingDetails = json_decode(json_encode($shippingDetails));
+        $userCart = DB::table('cart')->where(['user_email' => $user_email])->get();
+
+		foreach($userCart as $key => $product){
+            $productDetails = Product::where('id',$product->product_id)->first();
+            $userCart[$key]->image = $productDetails->image;
+            // $total_weight = $total_weight + $productDetails->weight;
+        }
+
+
+		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart'));
+	}
 }
 
