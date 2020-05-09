@@ -142,17 +142,15 @@
 										</td>	
 									</tr>
 									<tr>
-                                        <td>Grand Total  {{$total_amount  - Session::get('CouponAmount')}}</td>
+                                        <td>Grand Total</td>
                                        
 
 										<?php 
-										//$grand_total = $total_amount + $shippingCharges - Session::get('CouponAmount');
-										// $getCurrencyRates = Product::getCurrencyRates($total_amount); ?>
-										{{-- <td><span class="btn-secondary" data-toggle="tooltip" data-html="true" title="
-								USD {{ $getCurrencyRates['USD_Rate'] }}<br>
-								GBP {{ $getCurrencyRates['GBP_Rate'] }}<br>
-								EUR {{ $getCurrencyRates['EUR_Rate'] }}
-								">INR {{ $grand_total }}</span></td> --}}
+										$grand_total = $total_amount - Session::get('CouponAmount');
+										?>
+										 <td><span class="btn-secondary" data-toggle="tooltip" data-html="true" title="">
+											 Tk. {{ $grand_total }}
+											</span></td>
 									</tr>
 								</table>
 							</td>
@@ -161,7 +159,7 @@
 				</table>
 			</div>
 			<form name="paymentForm" id="paymentForm" action="{{ url('/place-order') }}" method="post">{{ csrf_field() }}
-				{{-- <input type="hidden" name="grand_total" value="{{ $grand_total }}"> --}}
+				<input type="hidden" name="grand_total" value="{{ $grand_total }}">
 				<div class="payment-options">
 					<span>
 						<label><strong>Select Payment Method:</strong></label>
