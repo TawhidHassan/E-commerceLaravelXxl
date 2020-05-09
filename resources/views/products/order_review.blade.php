@@ -125,7 +125,7 @@
 								<table class="table table-condensed total-result">
 									<tr>
 										<td>Cart Sub Total</td>
-										<td>INR {{ $total_amount }}</td>
+										<td>Tk {{ $total_amount }}</td>
 									</tr>
 									<tr class="shipping-cost">
 										<td>Shipping Cost (+)</td>
@@ -134,15 +134,17 @@
 									<tr class="shipping-cost">
 										<td>Discount Amount (-)</td>
 										<td>
-											{{-- @if(!empty(Session::get('CouponAmount')))
-												INR {{ Session::get('CouponAmount') }}
+											@if(!empty(Session::get('CouponAmount')))
+												Tk {{ Session::get('CouponAmount') }}
 											@else
-												INR 0
-											@endif --}}
+												Tk 0
+											@endif
 										</td>	
 									</tr>
 									<tr>
-										<td>Grand Total</td>
+                                        <td>Grand Total  {{$total_amount  - Session::get('CouponAmount')}}</td>
+                                       
+
 										<?php 
 										//$grand_total = $total_amount + $shippingCharges - Session::get('CouponAmount');
 										// $getCurrencyRates = Product::getCurrencyRates($total_amount); ?>

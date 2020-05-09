@@ -308,11 +308,19 @@ $('.toggle').on('click', function() {
     	}
 	});
 
-
-
-
+ 
 
 	
 	
 	});
+
+	//payment method 
+	function selectPaymentMethod(){
+		if($('#Paypal').is(':checked') || $('#COD').is(':checked')){
+			/*alert("checked");*/
+		}else{
+			alert("Please select Payment Method");
+			return false;
+		}
+	}
 	// Validate Register form on keyup and submit
