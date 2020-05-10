@@ -729,7 +729,19 @@ class ProductController extends Controller
                 $cartPro->save();
 
 			}
+			Session::put('order_id',$order_id);
+			Session::put('grand_total',$data['grand_total']);
+			// COD - Redirect user to thanks page after saving order
+			return redirect('/thanks');
 		}
 	}
+
+
+	public function thanks(Request $request){
+        $user_email = Auth::user()->email;
+        DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('orders.thanks');
+    }
+
 }
 
