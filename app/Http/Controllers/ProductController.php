@@ -751,6 +751,13 @@ class ProductController extends Controller
         echo "<pre>"; print_r($orders); die;*/
 		return view('orders.user_orders')->with(compact('orders'));
 	}
-
+	
+	public function userOrderDetails($order_id){
+        $user_id = Auth::user()->id;
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(json_encode($orderDetails));
+        /*echo "<pre>"; print_r($orderDetails); die;*/
+        return view('orders.user_order_details')->with(compact('orderDetails'));
+    }
 }
 

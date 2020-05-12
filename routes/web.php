@@ -95,6 +95,8 @@ Route::group(['middleware' => ['frontlogin']], function () {
     Route::get('/thanks','ProductController@thanks');
     // Users Orders Page
     Route::get('/orders','ProductController@userOrders');
+    // User Ordered Products Details
+    Route::get('/orders/{id}','ProductController@userOrderDetails');
 });
 
 Route::group(['middleware'=>['auth','admin']], function () {
