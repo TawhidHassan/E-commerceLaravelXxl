@@ -741,7 +741,16 @@ class ProductController extends Controller
         $user_email = Auth::user()->email;
         DB::table('cart')->where('user_email',$user_email)->delete();
         return view('orders.thanks');
-    }
+	}
+	
+	public function userOrders()
+	{
+		$user_id = Auth::user()->id;
+        $orders = Order::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
+        /*$orders = json_decode(json_encode($orders));
+        echo "<pre>"; print_r($orders); die;*/
+		return view('orders.user_orders')->with(compact('orders'));
+	}
 
 }
 

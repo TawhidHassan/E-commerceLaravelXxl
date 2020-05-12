@@ -92,7 +92,9 @@ Route::group(['middleware' => ['frontlogin']], function () {
     // Place Order
     Route::match(['get','post'],'/place-order','ProductController@placeOrder');
     // Thanks Page
-	Route::get('/thanks','ProductController@thanks');
+    Route::get('/thanks','ProductController@thanks');
+    // Users Orders Page
+    Route::get('/orders','ProductController@userOrders');
 });
 
 Route::group(['middleware'=>['auth','admin']], function () {
