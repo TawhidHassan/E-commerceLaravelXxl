@@ -38,6 +38,11 @@ class UserController extends Controller
 
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     Session::put('frontSession',$data['email']);
+
+                    if(!empty(Session::get('session_id'))){
+                        $session_id = Session::get('session_id');
+                        DB::table('cart')->where('session_id',$session_id)->update(['user_email' => $data['email']]);
+                    }
                     return redirect('/cart');
                 }
                
@@ -68,6 +73,11 @@ class UserController extends Controller
             /*echo "<pre>"; print_r($data); die;*/
             if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 Session::put('frontSession',$data['email']);
+
+                if(!empty(Session::get('session_id'))){
+                    $session_id = Session::get('session_id');
+                    DB::table('cart')->where('session_id',$session_id)->update(['user_email' => $data['email']]);
+                }
                 return redirect('/cart');
             }else{
                 return redirect()->back()->with('flash_message_error','Invalid Username or Password!');
