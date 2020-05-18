@@ -97,6 +97,9 @@ Route::group(['middleware' => ['frontlogin']], function () {
     Route::get('/orders','ProductController@userOrders');
     // User Ordered Products Details
     Route::get('/orders/{id}','ProductController@userOrderDetails');
+
+    // Paypal Page
+    Route::get('/paypal','ProductController@paypal');
 });
 
 Route::group(['middleware'=>['auth','admin']], function () {

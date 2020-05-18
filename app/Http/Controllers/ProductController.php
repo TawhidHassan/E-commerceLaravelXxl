@@ -731,8 +731,18 @@ class ProductController extends Controller
 			}
 			Session::put('order_id',$order_id);
 			Session::put('grand_total',$data['grand_total']);
-			// COD - Redirect user to thanks page after saving order
-			return redirect('/thanks');
+
+			if($data['payment_method']=="COD")
+			{
+				// COD - Redirect user to thanks page after saving order
+				return redirect('/thanks');
+			}else {
+				// COD - Redirect user to paypal page after saving order
+				return redirect('/paypal');
+			}
+
+
+			
 		}
 	}
 
@@ -758,6 +768,13 @@ class ProductController extends Controller
         $orderDetails = json_decode(json_encode($orderDetails));
         /*echo "<pre>"; print_r($orderDetails); die;*/
         return view('orders.user_order_details')->with(compact('orderDetails'));
-    }
+	}
+	
+	public function paypal(){
+		$user_email = Auth::user()->email;
+        // DB::table('cart')->where('user_email',$user_email)->delete();
+        return view('orders.paypal');
+	}
+	
 }
 
