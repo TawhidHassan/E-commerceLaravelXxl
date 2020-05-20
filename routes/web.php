@@ -100,6 +100,11 @@ Route::group(['middleware' => ['frontlogin']], function () {
 
     // Paypal Page
     Route::get('/paypal','ProductController@paypal');
+
+    // Paypal Thanks Page
+	Route::get('/paypal/thanks','ProductController@thanksPaypal');
+	// Paypal Cancel Page
+	Route::get('/paypal/cancel','ProductController@cancelPaypal');
 });
 
 Route::group(['middleware'=>['auth','admin']], function () {

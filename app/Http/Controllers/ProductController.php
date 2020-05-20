@@ -772,9 +772,20 @@ class ProductController extends Controller
 	
 	public function paypal(){
 		$user_email = Auth::user()->email;
-        // DB::table('cart')->where('user_email',$user_email)->delete();
+        DB::table('cart')->where('user_email',$user_email)->delete();
         return view('orders.paypal');
 	}
+
+	public function thanksPaypal(){
+        return view('orders.thanks_paypal');
+    }
+
+    
+
+    public function cancelPaypal(){
+        return view('orders.cancel_paypal');
+    }
+
 	
 }
 
