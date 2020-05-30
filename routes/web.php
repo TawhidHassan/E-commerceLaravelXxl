@@ -149,4 +149,6 @@ Route::group(['middleware'=>['auth','admin']], function () {
 	Route::get('admin/view-banners','BannersController@viewBanners');
 	Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner');
 
+    // Admin Orders Routes
+	Route::get('/admin/view-orders','ProductController@viewOrders');
 });

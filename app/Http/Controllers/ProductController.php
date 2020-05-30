@@ -784,6 +784,13 @@ class ProductController extends Controller
 
     public function cancelPaypal(){
         return view('orders.cancel_paypal');
+	}
+	
+	public function viewOrders(){
+        $orders = Order::with('orders')->orderBy('id','Desc')->get();
+        $orders = json_decode(json_encode($orders));
+        /*echo "<pre>"; print_r($orders); die;*/
+        return view('admin.orders.view_orders')->with(compact('orders'));
     }
 
 	
