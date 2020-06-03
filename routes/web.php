@@ -150,5 +150,11 @@ Route::group(['middleware'=>['auth','admin']], function () {
 	Route::get('/admin/delete-banner/{id}','BannersController@deleteBanner');
 
     // Admin Orders Routes
-	Route::get('/admin/view-orders','ProductController@viewOrders');
+    Route::get('/admin/view-orders','ProductController@viewOrders');
+    
+    // User Ordered Products Details
+    Route::get('/admin/view-order/{id}','ProductController@viewOrderDetails');
+
+    // Update Order Status
+Route::post('/admin/update-order-status','ProductController@updateOrderStatus'); 
 });
