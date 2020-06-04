@@ -55,8 +55,8 @@ Route::get('/get-product-price', 'ProductController@productPrice');
 // Apply Coupon
 Route::post('/cart/apply-coupon','ProductController@applyCoupon');
 
-
-Route::get('/admin','AdminController@login')->name('admin.login');
+//admin login
+Route::match(['get', 'post'], '/admin','AdminController@login');
 
 // Users Login/Register Page
 Route::get('/login-register','UserController@userLoginRegister');
@@ -107,7 +107,7 @@ Route::group(['middleware' => ['frontlogin']], function () {
 	Route::get('/paypal/cancel','ProductController@cancelPaypal');
 });
 
-Route::group(['middleware'=>['auth','admin']], function () {
+Route::group(['middleware'=>['adminlogin']], function () {
 
     Route::get('/admin/dashboard','AdminController@dashboard')->name('admin.dashbord');
     Route::get('/admin/setting','AdminController@setting')->name('admin.setting');

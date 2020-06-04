@@ -2,17 +2,30 @@
 
 namespace App\Http\Controllers;
 
-
 use App\User;
+use App\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
-    public function login()
+    public function login(Request $request)
     {
-        return view('admin.admin_login');
+        if($request->isMethod('post')){
+    		$data = $request->input();
+            $adminCount = Admin::where(['name' => $data['name'],'password'=>md5($data['password']),'status'=>1])->count(); 
+            if($adminCount > 0){
+                //echo "Success"; die;
+                Session::put('adminSession', $data['name']);
+                return redirect('/admin/dashboard');
+        	}else{
+                //echo "failed"; die;
+                return redirect('/admin')->with('flash_message_error','Invalid Username or Password');
+        	}
+    	}
+    	return view('admin.admin_login');
     }
 
     public function dashboard()

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Adminlogin;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\Frontlogin;
 use App\Http\Middleware\UserMiddleware;
@@ -65,5 +66,6 @@ class Kernel extends HttpKernel
         'admin'=>AdminMiddleware::class,
         'uaer'=>UserMiddleware::class,
         'frontlogin'=>Frontlogin::class,
+        'adminlogin'=>Adminlogin::class,
     ];
 }
