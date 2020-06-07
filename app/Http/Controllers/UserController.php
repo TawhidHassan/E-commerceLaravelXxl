@@ -37,6 +37,24 @@ class UserController extends Controller
                 $user->updated_at = date("Y-m-d H:i:s");
                 $user->save();
 
+
+                //send maill
+                $email=$data['email'];
+                $name=$data['name'];
+                $messageData=['email'=>$data['email'],'name'=>$data['name']];
+                Mail::send('emails.register', $messageData, function ($message) use($email) {
+                    // $message->from('john@johndoe.com', 'John Doe');
+                    // $message->sender('john@johndoe.com', 'John Doe');
+                    $message->to($email);
+                    // $message->cc('john@johndoe.com', 'John Doe');
+                    // $message->bcc('john@johndoe.com', 'John Doe');
+                    // $message->replyTo('john@johndoe.com', 'John Doe');
+                    $message->subject('Registration with E-com Website');
+                    // $message->priority(3);
+                    // $message->attach('pathToFile');
+                });
+
+
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
                     Session::put('frontSession',$data['email']);
 
