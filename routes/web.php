@@ -111,9 +111,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
     Route::get('/admin/dashboard','AdminController@dashboard')->name('admin.dashbord');
     Route::get('/admin/setting','AdminController@setting')->name('admin.setting');
-    Route::get('/admin/check-pwd','AdminController@checkPasd')->name('admin.checkPasd');
-    Route::post('/admin/updatepassword','AdminController@updatePassword')->name('admin.updatePassword');
-
+    Route::get('/admin/check-pwd','AdminController@chkPassword');
+    Route::match(['get', 'post'],'/admin/update-pwd','AdminController@updatePassword');
+    Route::get('/logout','AdminController@logout');
     // Categories Routes (Admin)
     Route::match(['get','post'],'/admin/add-category','CategoryController@addCategory');
     Route::match(['get','post'],'/admin/edit-category/{id}','CategoryController@editCategory');
