@@ -74,6 +74,9 @@ Route::post('user-login','UserController@login');
 Route::get('/user-logout','UserController@logout'); 
 
 
+// Confirm Account
+Route::get('confirm/{code}','UserController@confirmAccount');
+
 ///to prevent all route after login
 Route::group(['middleware' => ['frontlogin']], function () {
     // Users Accounts

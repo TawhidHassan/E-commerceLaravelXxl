@@ -15,6 +15,7 @@ use App\ProductsAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
@@ -734,6 +735,32 @@ class ProductController extends Controller
 
 			if($data['payment_method']=="COD")
 			{
+
+				
+			
+				$productDetails = Order::with('orders')->where('id',$order_id)->first();
+                $productDetails = json_decode(json_encode($productDetails),true);
+                /*echo "<pre>"; print_r($productDetails);*/ /*die;*/
+
+                $userDetails = User::where('id',$user_id)->first();
+                $userDetails = json_decode(json_encode($userDetails),true);
+                /*echo "<pre>"; print_r($userDetails); die;*/
+                /* Code for Order Email Start */
+                $email = $user_email;
+                $messageData = [
+                    'email' => $email,
+                    'name' => $shippingDetails->name,
+                    'order_id' => $order_id,
+                    'productDetails' => $productDetails,
+                    'userDetails' => $userDetails
+                ];
+                Mail::send('emails.order',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Order Placed - E-com Website');    
+                });
+                /* Code for Order Email Ends */
+
+
+
 				// COD - Redirect user to thanks page after saving order
 				return redirect('/thanks');
 			}else {

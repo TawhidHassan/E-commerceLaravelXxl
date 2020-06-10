@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
+
     public function userLoginRegister(){
         $meta_title = "User Login/Register - Ecom Website";
         return view('users.login_register')->with(compact('meta_title'));    
@@ -38,21 +39,23 @@ class UserController extends Controller
                 $user->save();
 
 
-                //send maill
+                //send register maill
                 $email=$data['email'];
                 $name=$data['name'];
                 $messageData=['email'=>$data['email'],'name'=>$data['name']];
                 Mail::send('emails.register', $messageData, function ($message) use($email) {
-                    // $message->from('john@johndoe.com', 'John Doe');
-                    // $message->sender('john@johndoe.com', 'John Doe');
                     $message->to($email);
-                    // $message->cc('john@johndoe.com', 'John Doe');
-                    // $message->bcc('john@johndoe.com', 'John Doe');
-                    // $message->replyTo('john@johndoe.com', 'John Doe');
                     $message->subject('Registration with E-com Website');
-                    // $message->priority(3);
-                    // $message->attach('pathToFile');
                 });
+
+                //send Confirmation Email
+                   $email = $data['email'];
+                   $messageData = ['email'=>$data['email'],'name'=>$data['name'],'code'=>base64_encode($data['email'])];
+                   Mail::send('emails.confirmation',$messageData,function($message) use($email){
+                       $message->to($email)->subject('Confirm your E-com Account');
+                   });
+   
+                   return redirect()->back()->with('flash_message_success','Please confirm your email to activate your account!');
 
 
                 if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
@@ -75,14 +78,14 @@ class UserController extends Controller
 
     public function checkEmail(Request $request)
     {
-    // Check if User already exists
-    $data = $request->all();
-    $usersCount = User::where('email',$data['email'])->count();
-    if($usersCount>0){
-        echo "false";
-    }else{
-        echo "true"; die;
-    }		
+        // Check if User already exists
+        $data = $request->all();
+        $usersCount = User::where('email',$data['email'])->count();
+        if($usersCount>0){
+            echo "false";
+        }else{
+            echo "true"; die;
+        }		
     }
 
 
@@ -90,7 +93,12 @@ class UserController extends Controller
         if($request->isMethod('post')){
             $data = $request->all();
             /*echo "<pre>"; print_r($data); die;*/
-            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>1])){
+                $userStatus = User::where('email',$data['email'])->first();
+                if($userStatus->status == 0){
+                    return redirect()->back()->with('flash_message_error','Your account is not activated! Please confirm your email to activate.');    
+                }
+                
                 Session::put('frontSession',$data['email']);
 
                 if(!empty(Session::get('session_id'))){
@@ -101,6 +109,29 @@ class UserController extends Controller
             }else{
                 return redirect()->back()->with('flash_message_error','Invalid Username or Password!');
             }
+        }
+    }
+
+    public function confirmAccount($email){
+        $email = base64_decode($email);
+        $userCount = User::where('email',$email)->count();
+        if($userCount > 0){
+            $userDetails = User::where('email',$email)->first();
+            if($userDetails->status == 1){
+                return redirect('login-register')->with('flash_message_success','Your Email account is already activated. You can login now.');
+            }else{
+                User::where('email',$email)->update(['status'=>1]);
+
+                // Send Welcome Email
+                $messageData = ['email'=>$email,'name'=>$userDetails->name];
+                Mail::send('emails.welcome',$messageData,function($message) use($email){
+                    $message->to($email)->subject('Welcome to E-com Website');
+                });
+
+                return redirect('login-register')->with('flash_message_success','Your Email account is activated. You can login now.');
+            }
+        }else{
+            abort(404);
         }
     }
 
