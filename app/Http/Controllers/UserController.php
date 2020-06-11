@@ -225,4 +225,11 @@ class UserController extends Controller
         }
     }
 
+    public function viewUsers(){
+        $users = User::get();
+        return view('admin.users.view_users')->with(compact('users'));
+    }
+
+
+
 }

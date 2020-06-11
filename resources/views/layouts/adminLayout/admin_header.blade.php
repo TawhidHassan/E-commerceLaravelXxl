@@ -1,6 +1,6 @@
 <!--Header-part-->
 <div id="header">
-    <h3><img src="{{asset('images/backend_images/logo.png')}}" alt="Logo"/></h3>
+    <h3><img src="{{ asset('images/frontend_images/home/logo.png') }}" alt="Logo"/></h3>
 </div>
 <!--close-Header-part-->
 
