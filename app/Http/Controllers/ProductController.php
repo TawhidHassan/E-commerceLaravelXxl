@@ -840,6 +840,27 @@ class ProductController extends Controller
         }
     }
 
+
+	public function searchProducts(Request $request)
+	{
+		if($request->isMethod('post')){
+            $data = $request->all();
+            $categories = Category::with('categories')->where(['parent_id' => 0])->get();
+            $search_product = $data['product'];
+            /*$productsAll = Product::where('product_name','like','%'.$search_product.'%')->orwhere('product_code',$search_product)->where('status',1)->paginate();*/
+
+            $productsAll = Product::where(function($query) use($search_product){
+                $query->where('product_name','like','%'.$search_product.'%')
+                ->orWhere('product_code','like','%'.$search_product.'%')
+                ->orWhere('description','like','%'.$search_product.'%')
+                ->orWhere('product_color','like','%'.$search_product.'%');
+            })->where('status',1)->get();
+
+            // $breadcrumb = "<a href='/'>Home</a> / ".$search_product;
+
+            return view('products.listing')->with(compact('categories','productsAll','search_product')); 
+        }
+	}
 	
 }
 

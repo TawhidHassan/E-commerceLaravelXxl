@@ -73,6 +73,8 @@ Route::post('user-login','UserController@login');
 // Users logout
 Route::get('/user-logout','UserController@logout'); 
 
+// Search Products
+Route::post('/search-products','ProductController@searchProducts');
 
 // Confirm Account
 Route::get('confirm/{code}','UserController@confirmAccount');
