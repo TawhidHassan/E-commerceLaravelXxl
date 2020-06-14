@@ -449,47 +449,59 @@ class ProductController extends Controller
         return redirect()->back()->with('flash_message_success', 'Product alternate mage has been deleted successfully');
 	}
 	
-	public function addToCart(Request $request)
-	{
-		Session::forget('CouponAmount');
-		Session::forget('CouponCode');
-		
-		$data = $request->all();
+	public function addtocart(Request $request){
+
+        Session::forget('CouponAmount');
+        Session::forget('CouponCode');
+
+        $data = $request->all();
         /*echo "<pre>"; print_r($data); die;*/
-		if(empty(Auth::user()->email)){
+
+        // Check Product Stock is available or not
+        $product_size = explode("-",$data['size']);
+        $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$product_size[1]])->first();
+
+        if($getProductStock->stock<$data['quantity']){
+            return redirect()->back()->with('flash_message_error','Required Quantity is not available!');
+        }
+
+        if(empty(Auth::user()->email)){
             $data['user_email'] = '';    
         }else{
             $data['user_email'] = Auth::user()->email;
-		}
-		
-		$session_id = Session::get('session_id');
+        }
+
+        $session_id = Session::get('session_id');
         if(!isset($session_id)){
             $session_id = str_random(40);
             Session::put('session_id',$session_id);
         }
-		$sizeArr=explode("-",$data['size']);
-		$product_size = $sizeArr[1];
-		$countProducts = DB::table('cart')->where(['product_id' => $data['product_id'],'product_color' => $data['product_color'],'size' => $product_size,'session_id' => $session_id])->count();
-		
-		if($countProducts>0)
-		{
-			return redirect()->back()->with('flash_message_error','Product has been already  added to Cart!');
-		}else{
 
-			//get perticuler product sku on cart for when we check those product stock on productAtributes tables
-			$getSKU=ProductsAttribute::select('sku')->where(['product_id'=>$data['product_id'],'size'=>$product_size])->first();
-			
-			DB::table('cart')
-			->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
-				'product_code' =>$getSKU->sku,'product_color' => $data['product_color'],
-				'price' => $data['price'],'size' =>$product_size,'quantity' => $data['quantity'],
-				'user_email' => $data['user_email'],'session_id' =>$session_id]);
-		}
+        $sizeIDArr = explode('-',$data['size']);
+        $product_size = $sizeIDArr[1];
 
-		
-			return redirect('cart')->with('flash_message_success','Product has been added in Cart!');
-       
-	}
+        if(empty(Auth::check())){
+            $countProducts = DB::table('cart')->where(['product_id' => $data['product_id'],'product_color' => $data['product_color'],'size' => $product_size,'session_id' => $session_id])->count();
+            if($countProducts>0){
+                return redirect()->back()->with('flash_message_error','Product already exist in Cart!');
+            }
+        }else{
+            $countProducts = DB::table('cart')->where(['product_id' => $data['product_id'],'product_color' => $data['product_color'],'size' => $product_size,'user_email' => $data['user_email']])->count();
+            if($countProducts>0){
+                return redirect()->back()->with('flash_message_error','Product already exist in Cart!');
+            }    
+        }
+        
+
+        $getSKU = ProductsAttribute::select('sku')->where(['product_id' => $data['product_id'], 'size' => $product_size])->first();
+                
+        DB::table('cart')
+        ->insert(['product_id' => $data['product_id'],'product_name' => $data['product_name'],
+            'product_code' => $getSKU['sku'],'product_color' => $data['product_color'],
+            'price' => $data['price'],'size' => $product_size,'quantity' => $data['quantity'],'user_email' => $data['user_email'],'session_id' => $session_id]);
+
+        return redirect('cart')->with('flash_message_success','Product has been added in Cart!');
+    }
 
 	public function cart(Request $request)
 	{
