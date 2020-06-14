@@ -852,6 +852,17 @@ class ProductController extends Controller
         }
     }
 
+	public function viewOrderInvoice($order_id){
+        $orderDetails = Order::with('orders')->where('id',$order_id)->first();
+        $orderDetails = json_decode(json_encode($orderDetails));
+        /*echo "<pre>"; print_r($orderDetails); die;*/
+        $user_id = $orderDetails->user_id;
+        $userDetails = User::where('id',$user_id)->first();
+        /*$userDetails = json_decode(json_encode($userDetails));
+        echo "<pre>"; print_r($userDetails);*/
+        return view('admin.orders.order_invoice')->with(compact('orderDetails','userDetails'));
+    }
+
 
 	public function searchProducts(Request $request)
 	{

@@ -163,6 +163,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
     // Update Order Status
     Route::post('/admin/update-order-status','ProductController@updateOrderStatus'); 
 
+    // Order Invoice
+    Route::get('/admin/view-order-invoice/{id}','ProductController@viewOrderInvoice');
+
     // Admin Users Route 
     Route::get('/admin/view-users','UserController@viewUsers');
 });
