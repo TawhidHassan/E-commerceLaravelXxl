@@ -78,6 +78,12 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Teature Item</label>
+                <div class="controls">
+                  <input type="checkbox" name="feature_iten" id="feature_iten" value="1">
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Enable</label>
                 <div class="controls">
                   <input type="checkbox" name="status" id="status" value="1">

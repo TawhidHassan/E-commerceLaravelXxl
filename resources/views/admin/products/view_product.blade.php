@@ -37,6 +37,7 @@
                   <th>Product Code</th>
                   <th>Product Color</th>
                   <th>Price</th>
+                  <th>Feature Item</th>
                   <th>Image</th>
                   <th>Actions</th>
                 </tr>
@@ -51,6 +52,7 @@
                   <td>{{ $product->product_code }}</td>
                   <td>{{ $product->product_color }}</td>
                   <td>{{ $product->price }}</td>
+                  <td class="center">@if($product->feature_iten == 1) Yes @else No @endif</td>
                   <td>
                     @if(!empty($product->image))
                       <img src="{{ asset('/images/backend_images/products/small/'.$product->image) }}" style="width:60px;">

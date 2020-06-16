@@ -134,12 +134,12 @@
                   </div>
                 </div>
               </div> --}}
-              {{-- <div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Feature Item</label>
                 <div class="controls">
-                  <input type="checkbox" name="feature_item" id="feature_item" @if($productDetails->feature_item == "1") checked @endif value="1">
+                  <input type="checkbox" name="feature_iten" id="feature_iten" @if($productDetails->feature_iten == "1") checked @endif value="1">
                 </div>
-              </div> --}}
+              </div>
               <div class="control-group">
                 <label class="control-label">Enable</label>
                 <div class="controls">

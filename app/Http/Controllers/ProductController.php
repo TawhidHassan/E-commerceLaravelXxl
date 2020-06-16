@@ -63,6 +63,11 @@ class ProductController extends Controller
                 $status='0';
             }else{
                 $status='1';
+			}
+			if(empty($data['feature_iten'])){
+                $feature_iten='0';
+            }else{
+                $feature_iten='1';
             }
     		$product->price = $data['price'];
 
@@ -86,6 +91,7 @@ class ProductController extends Controller
     			}
     		}
 
+			$product->feature_iten = $feature_iten;
 			$product->status = $status;
     		$product->save();
     		/*return redirect()->back()->with('flash_message_success','Product has been added successfully!');*/
@@ -144,13 +150,18 @@ class ProductController extends Controller
 			{
 				$data['care']="";
 			}
+			if(empty($data['feature_iten'])){
+                $feature_iten='0';
+            }else{
+                $feature_iten='1';
+            }
 			if(empty($data['status'])){
                 $status='0';
             }else{
                 $status='1';
             }
 
-			Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],
+			Product::where(['id'=>$id])->update(['feature_iten'=>$feature_iten,'category_id'=>$data['category_id'],
 			'product_name'=>$data['product_name'],
 			'product_code'=>$data['product_code'],
 			'product_color'=>$data['product_color'],
