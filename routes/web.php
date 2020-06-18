@@ -73,6 +73,9 @@ Route::post('user-login','UserController@login');
 // Users logout
 Route::get('/user-logout','UserController@logout'); 
 
+// Forgot Password
+Route::match(['get', 'post'],'/forgot-password','UserController@forgot_password');
+
 // Search Products
 Route::post('/search-products','ProductController@searchProducts');
 
