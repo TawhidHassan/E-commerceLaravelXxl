@@ -71,7 +71,7 @@
                     </div>
                     @endforeach
                     
-                   
+                    <div align="center">{{ $productsAll->links() }}</div>
                     
                 </div><!--features_items-->
             </div>
