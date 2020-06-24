@@ -18,6 +18,9 @@ class CreateCmsPagesTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('url');
+            $table->string('meta_title');
+            $table->text('meta_description');
+            $table->string('meta_keywords');
             $table->boolean('status');
             $table->timestamps();
         });
