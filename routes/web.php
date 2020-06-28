@@ -182,3 +182,7 @@ Route::group(['middleware'=>['adminlogin']], function () {
     Route::get('/admin/delete-cms-page/{id}','CmsController@deleteCmsPage'); 
 
 });
+
+
+// Display CMS Page
+Route::match(['get','post'],'/page/{url}','CmsController@cmsPage');

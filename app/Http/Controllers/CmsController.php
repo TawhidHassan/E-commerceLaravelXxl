@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CmsPage;
+use App\Category;
 use Illuminate\Http\Request;
 
 class CmsController extends Controller
@@ -76,5 +77,23 @@ class CmsController extends Controller
     {
         CmsPage::where('id',$id)->delete();
         return redirect('/admin/view-cms-pages')->with('flash_message_success','CMS Page has been deleted successfully!');
+    }
+    public function cmsPage($url)
+    {
+
+        // Redirect to 404 if CMS Page is disabled or does not exists
+        $cmsPageCount = CmsPage::where(['url'=>$url,'status'=>1])->count();
+        if($cmsPageCount>0){
+            // Get CMS Page Details
+            $cmsPageDetails = CmsPage::where('url',$url)->first();
+            
+        }else{
+            abort(404);    
+        }
+
+        //get category and sub cetgory
+        $categories=Category::with('categories')->where(['parent_id'=>0])->get();
+
+        return view('pages.cms_page')->with(compact('cmsPageDetails','categories'));
     }
 }
