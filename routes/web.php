@@ -186,3 +186,5 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
 // Display CMS Page
 Route::match(['get','post'],'/page/{url}','CmsController@cmsPage');
+//contect pages
+Route::match(['GET','POST'],'/contact','CmsController@contact');

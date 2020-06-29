@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\CmsPage;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class CmsController extends Controller
 {
@@ -96,4 +98,40 @@ class CmsController extends Controller
 
         return view('pages.cms_page')->with(compact('cmsPageDetails','categories'));
     }
+
+    public function contact(Request $request)
+    {
+         //get category and sub cetgory
+         $categories=Category::with('categories')->where(['parent_id'=>0])->get();
+        if($request->isMethod('post')){
+            $data = $request->all();
+            /*echo "<pre>"; print_r($data); die;*/
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+                'email' => 'required|email',
+                'subject' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            // Send Contact Email
+            $email = "admin1000@yopmail.com";
+            $messageData = [
+                'name'=>$data['name'],
+                'email'=>$data['email'],
+                'subject'=>$data['subject'],
+                'comment'=>$data['message']
+            ];
+            Mail::send('emails.enquiry',$messageData,function($message)use($email){
+                $message->to($email)->subject('Enquiry from E-com Website');
+            });
+
+            return redirect()->back()->with('flash_message_success','Thanks for your enquiry. We will get back to you soon.');
+        }
+        return view('pages.contact')->with(compact('categories'));
+  }
+
 }
