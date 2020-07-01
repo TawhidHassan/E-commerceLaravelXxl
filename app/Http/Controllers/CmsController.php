@@ -131,7 +131,12 @@ class CmsController extends Controller
 
             return redirect()->back()->with('flash_message_success','Thanks for your enquiry. We will get back to you soon.');
         }
-        return view('pages.contact')->with(compact('categories'));
+
+        //meta tag
+        $meta_title = "Contact Us - E-shop Sample Website";
+        $meta_description = "Contact us for any queries related to our products.";
+        $meta_keywords = "contact us, queries";
+        return view('pages.contact')->with(compact('categories','meta_title','meta_description','meta_keywords'));
   }
 
 }

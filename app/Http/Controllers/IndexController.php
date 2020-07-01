@@ -48,8 +48,11 @@ class IndexController extends Controller
 		// }
        
 		$banners=Banner::where('status','1')->get();
-	
+		// Meta tags
+		$meta_title = "E-shop Sample Website";
+		$meta_description = "Online Shopping Site for Men, Women and Kids Clothing";
+		$meta_keywords = "eshop website, online shopping, men clothing";
 
-        return view('index')->with(compact('productsAll','categories','banners'));
+        return view('index')->with(compact('productsAll','categories','banners','meta_title','meta_description','meta_keywords'));
     }
 }
