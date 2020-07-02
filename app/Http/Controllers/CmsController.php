@@ -86,8 +86,11 @@ class CmsController extends Controller
         // Redirect to 404 if CMS Page is disabled or does not exists
         $cmsPageCount = CmsPage::where(['url'=>$url,'status'=>1])->count();
         if($cmsPageCount>0){
-            // Get CMS Page Details
-            $cmsPageDetails = CmsPage::where('url',$url)->first();
+             // Get CMS Page Details
+             $cmsPageDetails = CmsPage::where('url',$url)->first();
+             $meta_title = $cmsPageDetails->meta_title;
+             $meta_description = $cmsPageDetails->meta_description;
+             $meta_keywords = $cmsPageDetails->meta_keywords;
             
         }else{
             abort(404);    
@@ -96,7 +99,7 @@ class CmsController extends Controller
         //get category and sub cetgory
         $categories=Category::with('categories')->where(['parent_id'=>0])->get();
 
-        return view('pages.cms_page')->with(compact('cmsPageDetails','categories'));
+        return view('pages.cms_page')->with(compact('cmsPageDetails','categories','meta_title','meta_keywords','meta_description'));
     }
 
     public function contact(Request $request)
