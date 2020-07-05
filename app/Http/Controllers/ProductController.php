@@ -336,7 +336,10 @@ class ProductController extends Controller
 				$productsAll=Product::where(['category_id'=>$categoryDetails->id])->where('status',1)->paginate(3);
 			}
 
-			return view('products.listing')->with(compact('categories','categoryDetails','productsAll'));
+			$meta_title = $categoryDetails->meta_title;
+			$meta_description = $categoryDetails->meta_description;
+			$meta_keywords = $categoryDetails->meta_keywords;
+			return view('products.listing')->with(compact('categories','categoryDetails','productsAll','meta_title','meta_description','meta_keywords'));
 	}
 
 
@@ -374,8 +377,11 @@ class ProductController extends Controller
             }   
             echo "<br><br><br>";
         }*/
-        
-		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock','relatedProducts'));
+		
+		$meta_title = $productDetails->product_name;
+        $meta_description = $productDetails->description;
+        $meta_keywords = $productDetails->product_name;
+		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock','relatedProducts','meta_title','meta_description','meta_keywords'));
 
 	}
 
@@ -531,7 +537,10 @@ class ProductController extends Controller
 			
 		}
 
-		return view('products.cart')->with(compact('userCart'));
+		$meta_title = "Shopping Cart - E-com Website";
+        $meta_description = "View Shopping Cart of E-com Website";
+        $meta_keywords = "shopping cart, e-com Website";
+        return view('products.cart')->with(compact('userCart','meta_title','meta_description','meta_keywords'));
 	}
 
 	public function deleteCartProduct($id=null){

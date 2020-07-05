@@ -27,14 +27,26 @@ class CategoryController extends Controller
             }else{
                 $status=1;
             }
+            if(empty($data['meta_title'])){
+                $data['meta_title'] = "";    
+            }
+            if(empty($data['meta_description'])){
+                $data['meta_description'] = "";    
+            }
+            if(empty($data['meta_keywords'])){
+                $data['meta_keywords'] = "";    
+            }
     		$category = new Category;
     		$category->name = $data['category_name'];
             $category->parent_id = $data['parent_id'];
     		$category->description = $data['description'];
     		$category->url = $data['url'];
-    		$category->status = $status;
+            $category->meta_title = $data['meta_title'];
+            $category->meta_description = $data['meta_description'];
+            $category->meta_keywords = $data['meta_keywords'];
+            $category->status = $status;
     		$category->save();
-    		return redirect('/admin/view-categories')->with('flash_message_success','Category added Successfully!');
+    		return redirect()->back()->with('flash_message_success', 'Category has been added successfully');
     	}
 
         $levels = Category::where(['parent_id'=>0])->get();
@@ -52,8 +64,17 @@ class CategoryController extends Controller
             }else{
                 $status=1;
             }
-            Category::where(['id'=>$id])->update(['name'=>$data['category_name'],'description'=>$data['description'],'url'=>$data['url'],'status'=>$status]);
-            return redirect('/admin/view-categories')->with('flash_message_success','Category updated Successfully!');
+            if(empty($data['meta_title'])){
+                $data['meta_title'] = "";    
+            }
+            if(empty($data['meta_description'])){
+                $data['meta_description'] = "";    
+            }
+            if(empty($data['meta_keywords'])){
+                $data['meta_keywords'] = "";    
+            }
+            Category::where(['id'=>$id])->update(['status'=>$status,'name'=>$data['category_name'],'parent_id'=>$data['parent_id'],'description'=>$data['description'],'url'=>$data['url'],'meta_title'=>$data['meta_title'],'meta_description'=>$data['meta_description'],'meta_keywords'=>$data['meta_keywords']]);
+            return redirect()->back()->with('flash_message_success', 'Category has been updated successfully');
         }
         $categoryDetails = Category::where(['id'=>$id])->first();
         $levels = Category::where(['parent_id'=>0])->get();
