@@ -323,4 +323,14 @@ $('.toggle').on('click', function() {
 			return false;
 		}
 	}
+	//check pincode method 
+	function checkPincode(){
+		var pincode=$("#chkPincode").val();
+
+		if(pincode=="")
+		{
+			alert("please enter pincode");return false;
+		}
+		
+	}
 	// Validate Register form on keyup and submit
