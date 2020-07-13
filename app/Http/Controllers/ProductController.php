@@ -904,6 +904,12 @@ class ProductController extends Controller
             return view('products.listing')->with(compact('categories','productsAll','search_product')); 
         }
 	}
-	
+
+	public function checkPincode(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            echo $pincodeCount = DB::table('pincodes')->where('pincode',$data['pincode'])->count();
+        }
+    }
 }
 

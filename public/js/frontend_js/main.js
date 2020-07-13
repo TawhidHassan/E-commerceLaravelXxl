@@ -325,12 +325,24 @@ $('.toggle').on('click', function() {
 	}
 	//check pincode method 
 	function checkPincode(){
-		var pincode=$("#chkPincode").val();
-
-		if(pincode=="")
-		{
-			alert("please enter pincode");return false;
+		var pincode = $("#chkPincode").val();
+	if(pincode==""){
+		alert("Please enter Pincode"); return false;	
+	}
+	$.ajax({
+		type:'post',
+		data:{pincode:pincode},
+		url:'/check-pincode',
+		success:function(resp){
+			if(resp>0){
+				$("#pincodeResponse").html("<font color='green'>This pincode is available for delivery</font>");
+			}else{
+				$("#pincodeResponse").html("<font color='red'>This pincode is not available for delivery</font>");	
+			}
+		},error:function(){
+			alert("Error");
 		}
+	});
 		
 	}
 	// Validate Register form on keyup and submit

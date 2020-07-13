@@ -188,3 +188,6 @@ Route::group(['middleware'=>['adminlogin']], function () {
 Route::match(['get','post'],'/page/{url}','CmsController@cmsPage');
 //contect pages
 Route::match(['GET','POST'],'/contact','CmsController@contact');
+
+// Check Pincode
+Route::post('/check-pincode','ProductController@checkPincode');
