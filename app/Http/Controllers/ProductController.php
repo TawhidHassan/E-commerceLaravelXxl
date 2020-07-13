@@ -676,6 +676,11 @@ class ProductController extends Controller
 			$shipping->mobile = $data['shipping_mobile'];
 			$shipping->save();
 		}
+		$pincodeCount = DB::table('pincodes')->where('pincode',$data['shipping_pincode'])->count();
+		if($pincodeCount == 0){
+			return redirect()->back()->with('flash_message_error','Your location is not available for delivery. Please enter another location.');
+		}
+
 		return redirect()->action('ProductController@orderReview');
 		}
 
@@ -698,8 +703,11 @@ class ProductController extends Controller
             // $total_weight = $total_weight + $productDetails->weight;
         }
 
+		$codpincodeCount = DB::table('cod_pincodes')->where('pincode',$shippingDetails->pincode)->count();
+        $prepaidpincodeCount = DB::table('prepaid_pincodes')->where('pincode',$shippingDetails->pincode)->count();
+
 		
-		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart'));
+		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','codpincodeCount','prepaidpincodeCount'));
 	}
 
 
@@ -713,6 +721,11 @@ class ProductController extends Controller
 			
 			// Get Shipping Address of User
 			$shippingDetails = DeliveryAddress::where(['user_email' => $user_email])->first();
+
+			$pincodeCount = DB::table('pincodes')->where('pincode',$shippingDetails->pincode)->count();
+            if($pincodeCount == 0){
+                return redirect()->back()->with('flash_message_error','Your location is not available for delivery. Please enter another location.');
+            }
 			
 			if(empty(Session::get('CouponCode'))){
 				$coupon_code = ''; 

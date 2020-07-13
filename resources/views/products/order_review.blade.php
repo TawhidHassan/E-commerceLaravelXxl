@@ -164,16 +164,16 @@
 					<span>
 						<label><strong>Select Payment Method:</strong></label>
 					</span>
-					{{-- @if($codpincodeCount>0) --}}
+					@if($codpincodeCount>0)
 					<span>
 						<label><input type="radio" name="payment_method" id="COD" value="COD"> <strong>COD</strong></label>
 					</span>
-					{{-- @endif --}}
-					{{-- @if($prepaidpincodeCount>0) --}}
+					@endif
+					@if($prepaidpincodeCount>0)
 					<span>
 						<label><input type="radio" name="payment_method" id="Paypal" value="Paypal"> <strong>Paypal</strong></label>
 					</span>
-					{{-- @endif --}}
+					@endif
 					<span style="float:right;">
 						<button type="submit" class="btn btn-default" onclick="return selectPaymentMethod();">Place Order</button>
 					</span>
