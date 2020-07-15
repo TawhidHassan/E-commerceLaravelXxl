@@ -89,7 +89,17 @@ class ProductController extends Controller
     				// Store image name in products table
     				$product->image = $filename;
     			}
-    		}
+			}
+			
+			// Upload Video
+			if($request->hasFile('video')){
+				$video_tmp = Input::file('video');
+				$video_name = $video_tmp->getClientOriginalName();
+				$video_path = 'videos/';
+				$video_tmp->move($video_path,$video_name);
+				$product->video = $video_name;
+			}
+
 
 			$product->feature_iten = $feature_iten;
 			$product->status = $status;
@@ -140,6 +150,19 @@ class ProductController extends Controller
 				$filename=$data['current_image'];
 			}
 
+			// Upload Video
+            if($request->hasFile('video')){
+                $video_tmp = Input::file('video');
+                $video_name = $video_tmp->getClientOriginalName();
+                $video_path = 'videos/';
+                $video_tmp->move($video_path,$video_name);
+                $videoName = $video_name;
+            }else if(!empty($data['current_video'])){
+                $videoName = $data['current_video'];
+            }else{
+                $videoName = '';
+            }
+
 
 			if(empty($data['description']))
 			{
@@ -169,6 +192,7 @@ class ProductController extends Controller
 			'care'=>$data['care'],
 			'price'=>$data['price'],
 			'image'=>$filename,
+			'video'=>$videoName,
 			'status'=>$status,
 			]);
 			return redirect()->back()->with('flash_message_success','product updated Successfully!');
@@ -176,7 +200,7 @@ class ProductController extends Controller
 		}
 
 
-		// get that product
+		    // get that product
 			$productDetails=Product::where(['id'=>$id])->first();
 			//category dropdown start
 			$categories=Category::where(['parent_id'=>0])->get();
@@ -203,6 +227,7 @@ class ProductController extends Controller
 			//category dropdown end
 			return view('admin.products.edit_product')->with(compact('productDetails','categories_drop_down'));
 	}
+
 
 	 public function deleteProductImage(Request $request,$id)
 	{
@@ -235,6 +260,23 @@ class ProductController extends Controller
         return redirect()->back()->with('flash_message_success', 'Product image has been deleted successfully');
 	}
 
+	public function deleteProductVideo($id){
+        // Get Video Name 
+        $productVideo = Product::select('video')->where('id',$id)->first();
+
+        // Get Video Path
+        $video_path = 'videos/';
+
+        // Delete Video if exists in videos folder
+        if(file_exists($video_path.$productVideo->video)){
+            unlink($video_path.$productVideo->video);
+        }
+
+        // Delete Video from Products table
+        Product::where('id',$id)->update(['video'=>'']);
+
+        return redirect()->back()->with('flash_message_success','Product Video has been deleted successfully');
+    }
 
 	public function deleteProduct($id = null){
         Product::where(['id'=>$id])->delete();

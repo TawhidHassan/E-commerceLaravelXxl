@@ -181,6 +181,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
     // Delete CMS Route
     Route::get('/admin/delete-cms-page/{id}','CmsController@deleteCmsPage'); 
 
+    //product video delete
+    Route::get('/admin/delete-product-video/{id}','ProductController@deleteProductVideo');
+
 });
 
 

@@ -78,6 +78,12 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Video</label>
+                <div class="controls">
+                  <div id="uniform-undefined"><input name="video" id="video" type="file"></div>
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Teature Item</label>
                 <div class="controls">
                   <input type="checkbox" name="feature_iten" id="feature_iten" value="1">

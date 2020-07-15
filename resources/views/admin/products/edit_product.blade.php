@@ -121,7 +121,7 @@
                     </table>
                 </div>
               </div>
-              {{-- <div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Video</label>
                 <div class="controls">
                   <div id="uniform-undefined">
@@ -133,7 +133,7 @@
                     @endif
                   </div>
                 </div>
-              </div> --}}
+              </div>
               <div class="control-group">
                 <label class="control-label">Feature Item</label>
                 <div class="controls">
