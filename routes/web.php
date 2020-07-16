@@ -184,6 +184,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
     //product video delete
     Route::get('/admin/delete-product-video/{id}','ProductController@deleteProductVideo');
 
+    //Create GET/POST route for add-currency in web.php file like below :-
+Route::match(['get','post'],'/admin/add-currency','CurrencyController@addCurrency');
+
 });
 
 
