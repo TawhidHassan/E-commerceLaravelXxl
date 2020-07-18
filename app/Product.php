@@ -30,6 +30,20 @@ class Product extends Model
     public static function productCount($cat_id){
     	$catCount = Product::where(['category_id'=>$cat_id,'status'=>1])->count();
     	return $catCount;
+	}
+	public static function getCurrencyRates($price){
+        $getCurrencies = Currency::where('status',1)->get();
+        foreach($getCurrencies as $currency){
+            if($currency->currency_code == "USD"){
+                $USD_Rate = round($price/$currency->exchange_rate,2);
+            }else if($currency->currency_code == "GBP"){
+                $GBP_Rate = round($price/$currency->exchange_rate,2);
+            }else if($currency->currency_code == "EUR"){
+                $EUR_Rate = round($price/$currency->exchange_rate,2);
+            }
+        }
+        $currenciesArr = array('USD_Rate'=>$USD_Rate,'GBP_Rate'=>$GBP_Rate,'EUR_Rate'=>$EUR_Rate);
+        return $currenciesArr;
     }
 
 }

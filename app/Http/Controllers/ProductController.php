@@ -434,9 +434,9 @@ class ProductController extends Controller
 		// echo "<pre>"; print_r($data);
 		$proArr=explode("-",$data['idSize']);
 		$proAttr=ProductsAttribute::where(['product_id'=>$proArr[0],'size'=>$proArr[1]])->first();
-		$price=$proAttr->price;
+		$getCurrencyRates = Product::getCurrencyRates($proAttr->price);
+		echo $proAttr->price."-".$getCurrencyRates['USD_Rate']."-".$getCurrencyRates['GBP_Rate']."-".$getCurrencyRates['EUR_Rate'];
 		$stock=$proAttr->stock;
-		echo $price;
 		echo "#";
 		echo $stock;
 	}

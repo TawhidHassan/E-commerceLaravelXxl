@@ -47,7 +47,8 @@ $(document).ready(function(){
 			success:function(resp){
 				// alert(resp);
 				var arr =resp.split('#');
-				$("#getPrice").html("Tk "+arr[0]);
+				var arr1 = arr[0].split('-');
+				$("#getPrice").html("Tk "+arr1[0]+"<br><h2>USD "+arr1[1]+"<br>GBP "+arr1[2]+"<br>EUR "+arr1[3]+"</h2>");
 				$("#price").val(arr[0]);
 				if(arr[1]==0)
 				{
