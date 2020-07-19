@@ -420,6 +420,7 @@ class ProductController extends Controller
             echo "<br><br><br>";
         }*/
 		
+		// echo "<pre>"; print_r($productDetails); die;
 		$meta_title = $productDetails->product_name;
         $meta_description = $productDetails->description;
         $meta_keywords = $productDetails->product_name;
@@ -514,7 +515,7 @@ class ProductController extends Controller
         Session::forget('CouponCode');
 
         $data = $request->all();
-        /*echo "<pre>"; print_r($data); die;*/
+        // echo "<pre>"; print_r($data); die;
 
         // Check Product Stock is available or not
         $product_size = explode("-",$data['size']);
@@ -579,6 +580,7 @@ class ProductController extends Controller
 			
 		}
 
+		//  echo "<pre>"; print_r($userCart); die;
 		$meta_title = "Shopping Cart - E-com Website";
         $meta_description = "View Shopping Cart of E-com Website";
         $meta_keywords = "shopping cart, e-com Website";

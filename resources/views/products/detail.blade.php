@@ -70,26 +70,24 @@
 
                                 
 
-                                <img src="images/product-details/rating.png" alt="" />
                                 <span>
                                     <?php $getCurrencyRates = Product::getCurrencyRates($productDetails->price); ?>
-										<span id="getPrice">
-											Tk {{ $productDetails->price }}<br>
-											<h2>
-												USD {{ $getCurrencyRates['USD_Rate'] }}<br>
-												GBP {{ $getCurrencyRates['GBP_Rate'] }}<br>
-												EUR {{ $getCurrencyRates['EUR_Rate'] }}<br>
-											</h2>
-										</span>
-                                    
+                                    <span id="getPrice">
+                                        INR {{ $productDetails->price }}<br>
+                                        <h2>
+                                            USD{{ $getCurrencyRates['USD_Rate'] }}<br>
+                                            GBP {{ $getCurrencyRates['GBP_Rate'] }}<br>
+                                            EUR {{ $getCurrencyRates['EUR_Rate'] }}<br>
+                                        </h2>
+                                    </span>
                                     <label>Quantity:</label>
-                                    <input type="text" name="quantity" value="1" />
-                                    @if ($totla_stock>0)    
-                                    <button type="submit" class="btn btn-fefault cart" id="cartButton">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        Add to cart
-                                    </button>
-                                    @endif
+                                    <input name="quantity" type="text" value="1" />
+                                    @if($totla_stock>0)
+                                        <button type="submit" class="btn btn-fefault cart" id="cartButton">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            Add to cart
+                                        </button>
+                                    @endif	
                                 </span>
                                 
                                 <p><b>Availability:</b><spanm id="Availability">

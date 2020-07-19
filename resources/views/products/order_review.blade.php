@@ -143,14 +143,14 @@
 									</tr>
 									<tr>
                                         <td>Grand Total</td>
-                                       
-
 										<?php 
 										$grand_total = $total_amount - Session::get('CouponAmount');
-										?>
-										 <td><span class="btn-secondary" data-toggle="tooltip" data-html="true" title="">
-											 Tk. {{ $grand_total }}
-											</span></td>
+										$getCurrencyRates = Product::getCurrencyRates($total_amount); ?>
+										<td><span class="btn-secondary" data-toggle="tooltip" data-html="true" title="
+											USD {{ $getCurrencyRates['USD_Rate'] }}<br>
+											GBP {{ $getCurrencyRates['GBP_Rate'] }}<br>
+											EUR {{ $getCurrencyRates['EUR_Rate'] }}
+											">Tk {{ $grand_total }}</span></td>
 									</tr>
 								</table>
 							</td>
