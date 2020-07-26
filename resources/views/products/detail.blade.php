@@ -105,7 +105,7 @@
 									<span id="pincodeResponse"></span>
                                     
                                     
-                                <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+                                    <div style="float:left; margin-top: 10px;" class="sharethis-inline-share-buttons"></div>
 
                             </div><!--/product-information-->
                         </div>
