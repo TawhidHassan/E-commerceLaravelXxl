@@ -1,5 +1,9 @@
 <?php use App\Product; ?>
-
+<form action="{{ url('/products-filter') }}" method="post">{{ csrf_field() }}
+    @if(!empty($url))
+	<input name="url" value="{{ $url }}" type="hidden">
+    @endif 
+    
 <div class="left-sidebar">
     <h2>Category</h2>
     <div class="panel-group category-products" id="accordian"><!--category-productsr-->
@@ -42,6 +46,25 @@
        
     </div><!--/category-products-->
 
+    <h2>Colors</h2>	
+    <div class="panel-group">
+        @if(!empty($_GET['color']))
+           <?php $colorArray = explode('-',$_GET['color']) ?>
+       
+        @endif
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <input name="colorFilter[]" onchange="javascript:this.form.submit();" id="black" value="black" type="checkbox" @if(!@empty($colorArray)&& in_array("black",$colorArray)) checked=""@endif>&nbsp;&nbsp;<span class="products-colors">black</span>
+                        <input name="colorFilter[]" onchange="javascript:this.form.submit();" id="green" value="green" type="checkbox" @if(!@empty($colorArray)&& in_array("green",$colorArray)) checked=""@endif>&nbsp;&nbsp;<span class="products-colors">green</span>
+                    </h4>
+                </div>
+            </div>
+    </div>
+
+
+
     {{-- <div class="price-range"><!--price-range-->
         <h2>Price Range</h2>
         <div class="well text-center">
@@ -52,3 +75,4 @@
 
 
 </div>
+</form>

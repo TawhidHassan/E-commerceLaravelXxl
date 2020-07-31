@@ -90,7 +90,7 @@
 					<div class="col-sm-4">
 						<div class="product-image-wrapper">
 							<div class="single-products">
-									<div class="productinfo text-center">img src="
+									<div class="productinfo text-center">
 										<img src="{{asset('images/backend_images/products/small/'.$pro->image)}}" alt="" />
 										<h2>INR {{ $pro->price }}</h2>
 										<p>{{ $pro->product_name }}</p>

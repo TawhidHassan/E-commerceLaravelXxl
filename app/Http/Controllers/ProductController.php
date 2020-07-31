@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends Controller
 {
@@ -351,39 +352,66 @@ class ProductController extends Controller
 
 	public function products($url=null)
 	{
-
-		//show 404 page if category url dose not exist
-		$countCategory=Category::where(['url'=>$url,'status'=>1])->count();
-		if($countCategory==0)
-		{
-			abort(404);
-		}
-
-		 //get category and sub cetgory
-		 $categories=Category::with('categories')->where(['parent_id'=>0])->get();
-			$categoryDetails=Category::where(['url'=>$url])->first();
-
-			if($categoryDetails->parent_id==0)
-			{
-			//if url is sub category url	
-			$subCategories = Category::where(['parent_id'=>$categoryDetails->id])->get();
-    		$subCategories = json_decode(json_encode($subCategories));
-    		foreach($subCategories as $subcat){
-    			$cat_ids[] = $subcat->id;
-    		}
-			$productsAll = Product::whereIn('products.category_id', $cat_ids)->where('status',1)->paginate(3);
-		
-			}else{
-				//if url is sub category url
-				$productsAll=Product::where(['category_id'=>$categoryDetails->id])->where('status',1)->paginate(3);
+			// Show 404 Page if Category does not exists
+			$categoryCount = Category::where(['url'=>$url,'status'=>1])->count();
+			if($categoryCount==0){
+				abort(404);
 			}
 
-			$meta_title = $categoryDetails->meta_title;
-			$meta_description = $categoryDetails->meta_description;
-			$meta_keywords = $categoryDetails->meta_keywords;
-			return view('products.listing')->with(compact('categories','categoryDetails','productsAll','meta_title','meta_description','meta_keywords'));
-	}
+			$categories = Category::with('categories')->where(['parent_id' => 0])->get();
 
+			$categoryDetails = Category::where(['url'=>$url])->first();
+			if($categoryDetails->parent_id==0){
+				$subCategories = Category::where(['parent_id'=>$categoryDetails->id])->get();
+				$subCategories = json_decode(json_encode($subCategories));
+				foreach($subCategories as $subcat){
+					$cat_ids[] = $subcat->id;
+				}
+				$productsAll = Product::whereIn('products.category_id', $cat_ids)->where('products.status','1')->orderBy('products.id','Desc');
+			}else{
+				$productsAll = Product::where(['products.category_id'=>$categoryDetails->id])->where('products.status','1')->orderBy('products.id','Desc');
+				$mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
+			}
+
+			if(!empty($_GET['color'])){
+				$colorArray = explode('-',$_GET['color']);
+				$productsAll = $productsAll->whereIn('products.product_color',$colorArray);
+			}
+
+			
+
+				$productsAll = $productsAll->paginate(6);
+				/*$productsAll = json_decode(json_encode($productsAll));
+				echo "<pre>"; print_r($productsAll); die;*/
+
+				$meta_title = $categoryDetails->meta_title;
+				$meta_description = $categoryDetails->meta_description;
+				$meta_keywords = $categoryDetails->meta_keywords;
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','meta_title','meta_description','meta_keywords','url'));
+		}
+
+
+	//filtter function
+	public function filter(Request $request)
+	{
+			$data=$request->all();
+			// echo "<pre>"; print_r($data);
+			$colorUrl="";
+        if(!empty($data['colorFilter'])){
+            foreach($data['colorFilter'] as $color){
+                if(empty($colorUrl)){
+                    $colorUrl = "&color=".$color;
+                }else{
+                    $colorUrl .= "-".$color;
+                }
+            }
+		}
+		
+		$finalUrl = "products/".$data['url']."?".$colorUrl;
+        return redirect::to($finalUrl);
+		
+		
+	}
 
 	//product details page
 	public function product($id=null)

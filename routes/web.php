@@ -79,6 +79,9 @@ Route::match(['get', 'post'],'/forgot-password','UserController@forgot_password'
 // Search Productss
 Route::post('/search-products','ProductController@searchProducts');
 
+// Products Filters Route
+Route::match(['get', 'post'],'/products-filter', 'ProductController@filter');
+
 // Confirm Account
 Route::get('confirm/{code}','UserController@confirmAccount');
 

@@ -658,7 +658,19 @@ ul.sub-menu {
   margin-bottom: 35px;
   padding-bottom: 20px;
   padding-top: 15px;
+
 }
+
+
+.products-colors {
+  border: 1px solid #F7F7F0;
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  padding-top: 15px;
+  color: #696763 !important;
+}
+
+
 .left-sidebar h2, .brands_products h2 {
   color: #FE980F;
   font-family: 'Roboto', sans-serif;
