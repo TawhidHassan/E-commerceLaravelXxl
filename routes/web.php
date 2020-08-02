@@ -34,7 +34,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //category/listing page
-Route::get('/products/{url}', 'ProductController@products');
+Route::get('/products/{url}', 'ProductController@products')->name('listingProduct');
 
 //product details page
 Route::get('/product/{url}', 'ProductController@product');

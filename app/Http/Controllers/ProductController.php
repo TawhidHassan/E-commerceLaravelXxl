@@ -384,10 +384,15 @@ class ProductController extends Controller
 				/*$productsAll = json_decode(json_encode($productsAll));
 				echo "<pre>"; print_r($productsAll); die;*/
 
+				/*$colorArray = array('Black','Blue','Brown','Gold','Green','Orange','Pink','Purple','Red','Silver','White','Yellow');*/
+				$colorArray = Product::select('product_color')->groupBy('product_color')->get();
+                $colorArray = array_flatten(json_decode(json_encode($colorArray),true));
+
+
 				$meta_title = $categoryDetails->meta_title;
 				$meta_description = $categoryDetails->meta_description;
 				$meta_keywords = $categoryDetails->meta_keywords;
-				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','meta_title','meta_description','meta_keywords','url'));
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','meta_title','meta_description','meta_keywords','url'));
 		}
 
 

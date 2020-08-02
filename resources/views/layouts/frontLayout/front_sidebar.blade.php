@@ -46,23 +46,34 @@
        
     </div><!--/category-products-->
 
+
+    
+
+    @if(Route::current()->getName() == 'listingProduct' || !@empty($url))
+        
     <h2>Colors</h2>	
-    <div class="panel-group">
-        @if(!empty($_GET['color']))
-           <?php $colorArray = explode('-',$_GET['color']) ?>
-       
-        @endif
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <input name="colorFilter[]" onchange="javascript:this.form.submit();" id="black" value="black" type="checkbox" @if(!@empty($colorArray)&& in_array("black",$colorArray)) checked=""@endif>&nbsp;&nbsp;<span class="products-colors">black</span>
-                        <input name="colorFilter[]" onchange="javascript:this.form.submit();" id="green" value="green" type="checkbox" @if(!@empty($colorArray)&& in_array("green",$colorArray)) checked=""@endif>&nbsp;&nbsp;<span class="products-colors">green</span>
-                    </h4>
-                </div>
-            </div>
-    </div>
-
+			<div class="panel-group">
+				@foreach($colorArray as $color)
+					@if(!empty($_GET['color']))
+						<?php $colorArr = explode('-',$_GET['color']) ?>
+						@if(in_array($color,$colorArr))
+							<?php $colorcheck="checked"; ?>	
+						@else
+							<?php $colorcheck=""; ?>
+						@endif		
+					@else
+						<?php $colorcheck=""; ?>
+					@endif
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<input name="colorFilter[]" onchange="javascript:this.form.submit();" id="{{ $color }}" value="{{ $color }}" type="checkbox" {{ $colorcheck }}>&nbsp;&nbsp;<span class="products-colors">{{ $color }}</span>
+							</h4>
+						</div>
+					</div>
+                @endforeach
+			</div>
+   @endif
 
 
     {{-- <div class="price-range"><!--price-range-->
