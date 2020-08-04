@@ -65,17 +65,17 @@
                   <textarea name="care">{{ $productDetails->care }}</textarea>
                 </div>
               </div>
-              {{-- <div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Sleeve</label>
                 <div class="controls">
-                  <select name="sleeve" class="form-control">
+                  <select name="sleeve" class="form-control" style="width: 220px;">
                     <option value="">Select Sleeve</option>
                     @foreach($sleeveArray as $sleeve)
                       <option value="{{ $sleeve }}" @if(!empty($productDetails->sleeve) && $productDetails->sleeve==$sleeve) selected @endif>{{ $sleeve }}</option>
                     @endforeach
                   </select>  
                 </div>
-              </div> --}}
+              </div>
               <div class="control-group">
                 <label class="control-label">Pattern</label>
                 {{-- <div class="controls">

@@ -25,13 +25,16 @@ class ProductController extends Controller
 {
 	public function viewProducts(){
 		$products = Product::orderby('id','DESC')->get();
-		// $products = json_decode(json_encode($products));
-		foreach($products as $key => $val){
+        // $products = json_decode(json_encode($products));
+        foreach($products as $key => $val){
 			$category_name = Category::where(['id'=>$val->category_id])->first();
-			$products[$key]->category_name = $category_name->name;
+			// echo $val;die;
+            $products[$key]->category_name = $category_name->name;
 		}
-		//echo "<pre>"; print_r($products); die;
-		return view('admin.products.view_product')->with(compact('products'));
+		
+		$products = json_decode(json_encode($products));
+        // echo "<pre>"; print_r($products); die;
+        return view('admin.products.view_product')->with(compact('products'));
 	}
 
 	public function addProduct(Request $request){
@@ -69,7 +72,13 @@ class ProductController extends Controller
                 $feature_iten='0';
             }else{
                 $feature_iten='1';
+			}
+			if(!empty($data['sleeve'])){
+                $product->sleeve = $data['sleeve'];
+            }else{
+                $product->sleeve = ''; 
             }
+
     		$product->price = $data['price'];
 
     		// Upload Image
@@ -120,8 +129,10 @@ class ProductController extends Controller
     			$categories_dropdown .= "<option value = '".$sub_cat->id."'>&nbsp;--&nbsp;".$sub_cat->name."</option>";
     		}
 		}
+
+		$sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
 		//category dropdown end
-        return view('admin.products.add_product')->with(compact('categories_dropdown'));
+        return view('admin.products.add_product')->with(compact('categories_dropdown','sleeveArray'));
 	}
 	
 	public function editProduct(Request $request,$id=null)
@@ -174,6 +185,11 @@ class ProductController extends Controller
 			{
 				$data['care']="";
 			}
+			if(!empty($data['sleeve'])){
+                $sleeve = $data['sleeve'];
+            }else{
+                $sleeve = ''; 
+            }
 			if(empty($data['feature_iten'])){
                 $feature_iten='0';
             }else{
@@ -191,6 +207,7 @@ class ProductController extends Controller
 			'product_color'=>$data['product_color'],
 			'description'=>$data['description'],
 			'care'=>$data['care'],
+			'sleeve'=>$data['sleeve'],
 			'price'=>$data['price'],
 			'image'=>$filename,
 			'video'=>$videoName,
@@ -226,7 +243,14 @@ class ProductController extends Controller
 				}
 			}
 			//category dropdown end
-			return view('admin.products.edit_product')->with(compact('productDetails','categories_drop_down'));
+
+
+			$sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
+
+			$patternArray = array('Checked','Plain','Printed','Self','Solid');
+
+
+			return view('admin.products.edit_product')->with(compact('productDetails','categories_drop_down','sleeveArray','patternArray'));
 	}
 
 
@@ -384,6 +408,8 @@ class ProductController extends Controller
 				/*$productsAll = json_decode(json_encode($productsAll));
 				echo "<pre>"; print_r($productsAll); die;*/
 
+
+				///get all color and show in side bar
 				/*$colorArray = array('Black','Blue','Brown','Gold','Green','Orange','Pink','Purple','Red','Silver','White','Yellow');*/
 				$colorArray = Product::select('product_color')->groupBy('product_color')->get();
                 $colorArray = array_flatten(json_decode(json_encode($colorArray),true));
