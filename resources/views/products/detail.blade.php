@@ -57,8 +57,12 @@
                         <div class="col-sm-7">
                             <div class="product-information"><!--/product-information-->
                                 <img src="images/product-details/new.jpg" class="newarrival" alt="" />
-                                <h2>{{$productDetails->product_name}}</h2>
-                                <p>Web ID: {{$productDetails->product_code}}</p>
+                                <h2>{{ $productDetails->product_name }}</h2>
+									<p>Product Code: {{ $productDetails->product_code }}</p>
+									<p>Product Color: {{ $productDetails->product_color }}</p>
+									@if(!empty($productDetails->sleeve))
+										<p>Sleeve: {{ $productDetails->sleeve }}</p>
+									@endif
                                 <p>
                                     <select id="selsize" name="size" style="width:150px">
                                         <option value="">select</option>

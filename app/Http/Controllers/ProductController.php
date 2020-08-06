@@ -402,7 +402,10 @@ class ProductController extends Controller
 				$productsAll = $productsAll->whereIn('products.product_color',$colorArray);
 			}
 
-			
+			if(!empty($_GET['sleeve'])){
+				$sleeveArray = explode('-',$_GET['sleeve']);
+				$productsAll = $productsAll->whereIn('products.sleeve',$sleeveArray);
+			}
 
 				$productsAll = $productsAll->paginate(6);
 				/*$productsAll = json_decode(json_encode($productsAll));
@@ -414,11 +417,14 @@ class ProductController extends Controller
 				$colorArray = Product::select('product_color')->groupBy('product_color')->get();
                 $colorArray = array_flatten(json_decode(json_encode($colorArray),true));
 
+				$sleeveArray = Product::select('sleeve')->where('sleeve','!=','')->groupBy('sleeve')->get();
+				$sleeveArray = array_flatten(json_decode(json_encode($sleeveArray),true));
+
 
 				$meta_title = $categoryDetails->meta_title;
 				$meta_description = $categoryDetails->meta_description;
 				$meta_keywords = $categoryDetails->meta_keywords;
-				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','meta_title','meta_description','meta_keywords','url'));
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','meta_title','meta_description','meta_keywords','url'));
 		}
 
 
@@ -437,8 +443,20 @@ class ProductController extends Controller
                 }
             }
 		}
+
+		$sleeveUrl="";
+        if(!empty($data['sleeveFilter'])){
+            foreach($data['sleeveFilter'] as $sleeve){
+                if(empty($sleeveUrl)){
+                    $sleeveUrl = "&sleeve=".$sleeve;
+                }else{
+                    $sleeveUrl .= "-".$sleeve;
+                }
+            }
+        }
+
 		
-		$finalUrl = "products/".$data['url']."?".$colorUrl;
+		$finalUrl = "products/".$data['url']."?".$colorUrl.$sleeveUrl;
         return redirect::to($finalUrl);
 		
 		
