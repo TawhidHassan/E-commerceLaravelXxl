@@ -77,6 +77,11 @@ class ProductController extends Controller
                 $product->sleeve = $data['sleeve'];
             }else{
                 $product->sleeve = ''; 
+			}
+			if(!empty($data['pattern'])){
+                $product->pattern = $data['pattern'];
+            }else{
+                $product->pattern = ''; 
             }
 
     		$product->price = $data['price'];
@@ -131,8 +136,9 @@ class ProductController extends Controller
 		}
 
 		$sleeveArray = array('Full Sleeve','Half Sleeve','Short Sleeve','Sleeveless');
+		$patternArray = array('Checked','Plain','Printed','Self','Solid');
 		//category dropdown end
-        return view('admin.products.add_product')->with(compact('categories_dropdown','sleeveArray'));
+        return view('admin.products.add_product')->with(compact('categories_dropdown','sleeveArray','patternArray'));
 	}
 	
 	public function editProduct(Request $request,$id=null)
@@ -200,7 +206,11 @@ class ProductController extends Controller
             }else{
                 $status='1';
             }
-
+			if(!empty($data['pattern'])){
+                $pattern = $data['pattern'];
+            }else{
+                $pattern = ''; 
+            }
 			Product::where(['id'=>$id])->update(['feature_iten'=>$feature_iten,'category_id'=>$data['category_id'],
 			'product_name'=>$data['product_name'],
 			'product_code'=>$data['product_code'],
@@ -212,6 +222,7 @@ class ProductController extends Controller
 			'image'=>$filename,
 			'video'=>$videoName,
 			'status'=>$status,
+			'pattern'=>$pattern,
 			]);
 			return redirect()->back()->with('flash_message_success','product updated Successfully!');
 
@@ -406,6 +417,11 @@ class ProductController extends Controller
 				$sleeveArray = explode('-',$_GET['sleeve']);
 				$productsAll = $productsAll->whereIn('products.sleeve',$sleeveArray);
 			}
+			if(!empty($_GET['pattern'])){
+				$patternArray = explode('-',$_GET['pattern']);
+				$productsAll = $productsAll->whereIn('products.pattern',$patternArray);
+			}
+	
 
 				$productsAll = $productsAll->paginate(6);
 				/*$productsAll = json_decode(json_encode($productsAll));
@@ -420,11 +436,13 @@ class ProductController extends Controller
 				$sleeveArray = Product::select('sleeve')->where('sleeve','!=','')->groupBy('sleeve')->get();
 				$sleeveArray = array_flatten(json_decode(json_encode($sleeveArray),true));
 
+				$patternArray = Product::select('pattern')->where('pattern','!=','')->groupBy('pattern')->get();
+				$patternArray = array_flatten(json_decode(json_encode($patternArray),true));
 
 				$meta_title = $categoryDetails->meta_title;
 				$meta_description = $categoryDetails->meta_description;
 				$meta_keywords = $categoryDetails->meta_keywords;
-				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','meta_title','meta_description','meta_keywords','url'));
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','patternArray','meta_title','meta_description','meta_keywords','url'));
 		}
 
 
@@ -453,10 +471,21 @@ class ProductController extends Controller
                     $sleeveUrl .= "-".$sleeve;
                 }
             }
+		}
+		
+		$patternUrl="";
+        if(!empty($data['patternFilter'])){
+            foreach($data['patternFilter'] as $pattern){
+                if(empty($patternUrl)){
+                    $patternUrl = "&pattern=".$pattern;
+                }else{
+                    $patternUrl .= "-".$pattern;
+                }
+            }
         }
 
 		
-		$finalUrl = "products/".$data['url']."?".$colorUrl.$sleeveUrl;
+		$finalUrl = "products/".$data['url']."?".$colorUrl.$sleeveUrl.$patternUrl;
         return redirect::to($finalUrl);
 		
 		

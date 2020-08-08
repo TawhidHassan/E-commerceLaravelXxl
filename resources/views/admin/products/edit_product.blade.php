@@ -78,14 +78,14 @@
               </div>
               <div class="control-group">
                 <label class="control-label">Pattern</label>
-                {{-- <div class="controls">
-                  <select name="pattern" class="form-control">
+                <div class="controls">
+                  <select name="pattern" class="form-control" style="width: 220px;">
                     <option value="">Select Pattern</option>
                     @foreach($patternArray as $pattern)
                       <option value="{{ $pattern }}" @if(!empty($productDetails->pattern) && $productDetails->pattern==$pattern) selected @endif>{{ $pattern }}</option>
                     @endforeach
                   </select>  
-                </div> --}}
+                </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Price</label>

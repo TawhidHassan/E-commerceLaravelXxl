@@ -62,6 +62,9 @@
 									<p>Product Color: {{ $productDetails->product_color }}</p>
 									@if(!empty($productDetails->sleeve))
 										<p>Sleeve: {{ $productDetails->sleeve }}</p>
+                                    @endif
+                                    @if(!empty($productDetails->pattern))
+										<p>Pattern: {{ $productDetails->pattern }}</p>
 									@endif
                                 <p>
                                     <select id="selsize" name="size" style="width:150px">

@@ -77,6 +77,17 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Pattern</label>
+                <div class="controls">
+                  <select name="pattern" class="form-control" style="width: 220px;">
+                    <option value="">Select Pattern</option>
+                    @foreach($patternArray as $pattern)
+                      <option value="{{ $pattern }}">{{ $pattern }}</option>
+                    @endforeach
+                  </select>  
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Price</label>
                 <div class="controls">
                   <input type="text" name="price" id="price">

@@ -34,15 +34,7 @@
             @endif
             @endforeach
         </div>
-            <hr>
-            <hr>
-        @foreach ($categories as $cat)
-        <div class="panel panel-default">
-            <div class="panel-heading">
-            <h4 class="panel-title"><a href="#">{{$cat->name}}</a></h4>
-            </div>
-        </div>
-        @endforeach
+            
        
     </div><!--/category-products-->
 
@@ -93,6 +85,31 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<input name="sleeveFilter[]" onchange="javascript:this.form.submit();" id="{{ $sleeve }}" value="{{ $sleeve }}" type="checkbox" {{ $sleevecheck }}>&nbsp;&nbsp;<span class="products-sleeves">{{ $sleeve }}</span>
+							</h4>
+						</div>
+					</div>
+				@endforeach
+			</div>
+
+            <div>&nbsp;</div>
+            
+            <h2>Pattern</h2>	
+			<div class="panel-group">
+				@foreach($patternArray as $pattern)
+					@if(!empty($_GET['pattern']))
+						<?php $patternArr = explode('-',$_GET['pattern']) ?>
+						@if(in_array($pattern,$patternArr))
+							<?php $patterncheck="checked"; ?>	
+						@else
+							<?php $patterncheck=""; ?>
+						@endif		
+					@else
+						<?php $patterncheck=""; ?>
+					@endif
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<input name="patternFilter[]" onchange="javascript:this.form.submit();" id="{{ $pattern }}" value="{{ $pattern }}" type="checkbox" {{ $patterncheck }}>&nbsp;&nbsp;<span class="products-patterns">{{ $pattern }}</span>
 							</h4>
 						</div>
 					</div>
