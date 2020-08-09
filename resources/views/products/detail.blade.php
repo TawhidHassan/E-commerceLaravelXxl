@@ -68,7 +68,7 @@
 									@endif
                                 <p>
                                     <select id="selsize" name="size" style="width:150px">
-                                        <option value="">select</option>
+                                        
                                         @foreach ($productDetails->attributes as $size)
                                     <option value="{{$productDetails->id}}-{{$size->size}}">{{$size->size}}</option>
                                         @endforeach

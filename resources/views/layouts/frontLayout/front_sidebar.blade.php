@@ -117,6 +117,31 @@
 			</div>
 
 			<div>&nbsp;</div>
+			<h2>Size</h2>	
+			<div class="panel-group">
+				@foreach($sizesArray as $size)
+					@if(!empty($_GET['size']))
+						<?php $sizeArr = explode('-',$_GET['size']) ?>
+						@if(in_array($size,$sizeArr))
+							<?php $sizecheck="checked"; ?>	
+						@else
+							<?php $sizecheck=""; ?>
+						@endif		
+					@else
+						<?php $sizecheck=""; ?>
+					@endif
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<input name="sizeFilter[]" onchange="javascript:this.form.submit();" id="{{ $size }}" value="{{ $size }}" type="checkbox" {{ $sizecheck }}>&nbsp;&nbsp;<span class="products-sizes">{{ $size }}</span>
+							</h4>
+						</div>
+					</div>
+				@endforeach
+			</div>
+
+			<div>&nbsp;</div>
+
 
    @endif
 

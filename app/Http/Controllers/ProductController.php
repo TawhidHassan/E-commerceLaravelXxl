@@ -421,6 +421,15 @@ class ProductController extends Controller
 				$patternArray = explode('-',$_GET['pattern']);
 				$productsAll = $productsAll->whereIn('products.pattern',$patternArray);
 			}
+
+			if(!empty($_GET['size'])){
+				$sizeArray = explode('-',$_GET['size']);
+				$productsAll = $productsAll->join('products_attributes','products_attributes.product_id','=','products.id')
+				->select('products.*','products_attributes.product_id','products_attributes.size')
+				->groupBy('products_attributes.product_id')
+				->whereIn('products_attributes.size',$sizeArray);
+			}
+	
 	
 
 				$productsAll = $productsAll->paginate(6);
@@ -439,10 +448,14 @@ class ProductController extends Controller
 				$patternArray = Product::select('pattern')->where('pattern','!=','')->groupBy('pattern')->get();
 				$patternArray = array_flatten(json_decode(json_encode($patternArray),true));
 
+				$sizesArray = ProductsAttribute::select('size')->groupBy('size')->get();
+				$sizesArray = array_flatten(json_decode(json_encode($sizesArray),true));
+				/*echo "<pre>"; print_r($sizesArray); die;*/
+
 				$meta_title = $categoryDetails->meta_title;
 				$meta_description = $categoryDetails->meta_description;
 				$meta_keywords = $categoryDetails->meta_keywords;
-				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','patternArray','meta_title','meta_description','meta_keywords','url'));
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','patternArray','sizesArray','meta_title','meta_description','meta_keywords','url'));
 		}
 
 
@@ -484,8 +497,18 @@ class ProductController extends Controller
             }
         }
 
-		
-		$finalUrl = "products/".$data['url']."?".$colorUrl.$sleeveUrl.$patternUrl;
+		$sizeUrl="";
+        if(!empty($data['sizeFilter'])){
+            foreach($data['sizeFilter'] as $size){
+                if(empty($sizeUrl)){
+                    $sizeUrl = "&size=".$size;
+                }else{
+                    $sizeUrl .= "-".$size;
+                }
+            }
+        }
+
+        $finalUrl = "products/".$data['url']."?".$colorUrl.$sleeveUrl.$patternUrl.$sizeUrl;
         return redirect::to($finalUrl);
 		
 		
