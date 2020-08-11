@@ -85,6 +85,7 @@
 						    ({{ count($productsAll) }})
 					</h2>
 					
+					<div align="left"><?php echo $breadcrumb; ?></div>
 					<div>&nbsp;</div>
 					@foreach($productsAll as $pro)
 					<div class="col-sm-4">

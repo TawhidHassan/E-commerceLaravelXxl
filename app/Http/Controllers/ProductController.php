@@ -403,9 +403,12 @@ class ProductController extends Controller
 					$cat_ids[] = $subcat->id;
 				}
 				$productsAll = Product::whereIn('products.category_id', $cat_ids)->where('products.status','1')->orderBy('products.id','Desc');
+				$breadcrumb = "<a href='/'>Home</a> / <a href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";
 			}else{
 				$productsAll = Product::where(['products.category_id'=>$categoryDetails->id])->where('products.status','1')->orderBy('products.id','Desc');
 				$mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
+				$breadcrumb = "<a href='/'>Home</a> / <a href='".$mainCategory->url."'>".$mainCategory->name."</a> / <a href='".$categoryDetails->url."'>".$categoryDetails->name."</a>";	
+
 			}
 
 			if(!empty($_GET['color'])){
@@ -455,7 +458,7 @@ class ProductController extends Controller
 				$meta_title = $categoryDetails->meta_title;
 				$meta_description = $categoryDetails->meta_description;
 				$meta_keywords = $categoryDetails->meta_keywords;
-				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','patternArray','sizesArray','meta_title','meta_description','meta_keywords','url'));
+				return view('products.listing')->with(compact('categories','productsAll','categoryDetails','colorArray','sleeveArray','patternArray','sizesArray','breadcrumb','meta_title','meta_description','meta_keywords','url'));
 		}
 
 
@@ -550,10 +553,23 @@ class ProductController extends Controller
         }*/
 		
 		// echo "<pre>"; print_r($productDetails); die;
+
+		$categories = Category::with('categories')->where(['parent_id' => 0])->get();
+
+        $categoryDetails = Category::where('id',$productDetails->category_id)->first();
+        if($categoryDetails->parent_id==0){
+            $breadcrumb = "<a href='/'>Home</a> / <a href='".$categoryDetails->url."'>".$categoryDetails->name."</a> / ".$productDetails->product_name;
+        }else{
+            $mainCategory = Category::where('id',$categoryDetails->parent_id)->first();
+            $breadcrumb = "<a style='color:#333;' href='/'>Home</a> / <a style='color:#333;' href='/products/".$mainCategory->url."'>".$mainCategory->name."</a> / <a style='color:#333;' href='/products/".$categoryDetails->url."'>".$categoryDetails->name."</a> / ".$productDetails->product_name;   
+        }
+
+
+
 		$meta_title = $productDetails->product_name;
         $meta_description = $productDetails->description;
         $meta_keywords = $productDetails->product_name;
-		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock','relatedProducts','meta_title','meta_description','meta_keywords'));
+		return view('products.detail')->with(compact('productDetails','categories','productAltImages','totla_stock','relatedProducts','breadcrumb','meta_title','meta_description','meta_keywords'));
 
 	}
 
