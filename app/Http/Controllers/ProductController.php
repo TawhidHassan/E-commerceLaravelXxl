@@ -961,7 +961,20 @@ class ProductController extends Controller
                 $cartPro->product_size = $pro->size;
                 $cartPro->product_price = $pro->price;
                 $cartPro->product_qty = $pro->quantity;
-                $cartPro->save();
+				$cartPro->save();
+				
+
+
+				// Reduce Stock Script Starts
+                $getProductStock = ProductsAttribute::where('sku',$pro->product_code)->first();
+                /*echo "Original Stock: ".$getProductStock->stock;
+                echo "Stock to reduce: ".$pro->quantity;*/
+                $newStock = $getProductStock->stock - $pro->quantity;
+                if($newStock<0){
+                    $newStock = 0;
+                }
+               ProductsAttribute::where('sku',$pro->product_code)->update(['stock'=>$newStock]);
+                // Reduce Stock Script Ends
 
 			}
 			Session::put('order_id',$order_id);
