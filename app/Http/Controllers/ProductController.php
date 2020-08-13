@@ -907,6 +907,24 @@ class ProductController extends Controller
 			$data = $request->all();
             $user_id = Auth::user()->id;
 			$user_email = Auth::user()->email;
+
+			//prevent out of stock products from ordering
+			$userCart=DB::table('cart')->where('user_email',$user_email)->get();
+			// $userCart=json_decode(json_encode($userCart));
+			// echo"<pre>";print_r($userCart);die;
+			foreach($userCart as $cart)
+			{
+				 $product_stock=Product::getProductStock($cart->product_id,$cart->size);
+				 if($product_stock==0){
+                    // Product::deleteCartProduct($cart->product_id,$user_email);
+                    return redirect('/cart')->with('flash_message_error','Sold Out product removed from Cart. Try again!');
+				}
+				/*echo "Original Stock: ".$product_stock;
+                echo "Demanded Stock: ".$cart->quantity; die;*/
+                if($cart->quantity>$product_stock){
+                    return redirect('/cart')->with('flash_message_error','Reduce Product Stock and try again.');    
+                }
+			}
 			
 			// Get Shipping Address of User
 			$shippingDetails = DeliveryAddress::where(['user_email' => $user_email])->first();
