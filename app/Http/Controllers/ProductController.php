@@ -916,7 +916,7 @@ class ProductController extends Controller
 			{
 				 $product_stock=Product::getProductStock($cart->product_id,$cart->size);
 				 if($product_stock==0){
-                    // Product::deleteCartProduct($cart->product_id,$user_email);
+                    Product::deleteCartProduct($cart->product_id,$user_email);
                     return redirect('/cart')->with('flash_message_error','Sold Out product removed from Cart. Try again!');
 				}
 				/*echo "Original Stock: ".$product_stock;
