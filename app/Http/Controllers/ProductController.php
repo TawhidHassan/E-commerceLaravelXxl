@@ -923,6 +923,12 @@ class ProductController extends Controller
                 echo "Demanded Stock: ".$cart->quantity; die;*/
                 if($cart->quantity>$product_stock){
                     return redirect('/cart')->with('flash_message_error','Reduce Product Stock and try again.');    
+				}
+				
+				$product_status = Product::getProductStatus($cart->product_id);
+                if($product_status==0){
+                    Product::deleteCartProduct($cart->product_id,$user_email);
+                    return redirect('/cart')->with('flash_message_error','Disabled product removed from Cart. Please try again!');
                 }
 			}
 			
