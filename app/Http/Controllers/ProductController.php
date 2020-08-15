@@ -912,8 +912,15 @@ class ProductController extends Controller
 			$userCart=DB::table('cart')->where('user_email',$user_email)->get();
 			// $userCart=json_decode(json_encode($userCart));
 			// echo"<pre>";print_r($userCart);die;
-			foreach($userCart as $cart)
+			foreach($userCart as $cart) //product security option
 			{
+
+				$getAttributeCount = Product::getAttributeCount($cart->product_id,$cart->size);
+                if($getAttributeCount==0){
+                    Product::deleteCartProduct($cart->product_id,$user_email);
+                    return redirect('/cart')->with('flash_message_error','One of the product is not available. Try again!');
+                }
+
 				 $product_stock=Product::getProductStock($cart->product_id,$cart->size);
 				 if($product_stock==0){
                     Product::deleteCartProduct($cart->product_id,$user_email);
@@ -929,7 +936,9 @@ class ProductController extends Controller
                 if($product_status==0){
                     Product::deleteCartProduct($cart->product_id,$user_email);
                     return redirect('/cart')->with('flash_message_error','Disabled product removed from Cart. Please try again!');
-                }
+				}
+
+				
 			}
 			
 			// Get Shipping Address of User
