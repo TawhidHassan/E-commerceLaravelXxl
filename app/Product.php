@@ -69,4 +69,24 @@ class Product extends Model
         return $getCategoryStatus->status;
     }
 
+    public static function getShippingCharges($total_weight,$country){
+        $shippingDetails = ShippingCharge::where('country',$country)->first();
+        if($total_weight>0){
+            if($total_weight>0 && $total_weight<=500){
+                $shipping_charges = $shippingDetails->shipping_charges0_500g;
+            }else if($total_weight>=501 && $total_weight<=1000){
+                $shipping_charges = $shippingDetails->shipping_charges0_1000g;
+            }else if($total_weight>=1001 && $total_weight<=2000){
+                $shipping_charges = $shippingDetails->shipping_charges1001_2000g;
+            }else if($total_weight>=2001 && $total_weight<=5000){
+                $shipping_charges = $shippingDetails->shipping_charges2001_5000g;
+            }else{
+                $shipping_charges = 0;    
+            }
+        }else{
+            $shipping_charges = 0;
+        }
+        return $shipping_charges;
+    }
+
 }

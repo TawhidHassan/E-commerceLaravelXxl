@@ -194,6 +194,13 @@ Route::group(['middleware'=>['adminlogin']], function () {
     //Create GET/POST route for edit-currency with id parameter in web.php file like below :-
     Route::match(['get','post'],'/admin/edit-currency/{id}','CurrencyController@editCurrency');
     Route::match(['get','post'],'/admin/delete-currency/{id}','CurrencyController@deleteCurrency');
+
+
+    // View Shipping Charges
+	Route::get('/admin/view-shipping','ShippingController@viewShipping');
+
+	// Update Shipping Charges
+	Route::match(['get','post'],'/admin/edit-shipping/{id}','ShippingController@editShipping');
 });
 
 

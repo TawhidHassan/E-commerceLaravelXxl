@@ -889,14 +889,19 @@ class ProductController extends Controller
 		foreach($userCart as $key => $product){
             $productDetails = Product::where('id',$product->product_id)->first();
             $userCart[$key]->image = $productDetails->image;
-            // $total_weight = $total_weight + $productDetails->weight;
+            $total_weight = 1001;
         }
 
 		$codpincodeCount = DB::table('cod_pincodes')->where('pincode',$shippingDetails->pincode)->count();
         $prepaidpincodeCount = DB::table('prepaid_pincodes')->where('pincode',$shippingDetails->pincode)->count();
 
+
+		// Fetch Shipping Charges
+        $shippingCharges = Product::getShippingCharges($total_weight,$shippingDetails->country);
+        Session::put('ShippingCharges',$shippingCharges);
+
 		
-		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','codpincodeCount','prepaidpincodeCount'));
+		return view('products.order_review')->with(compact('userDetails','shippingDetails','userCart','codpincodeCount','prepaidpincodeCount','shippingCharges'));
 	}
 
 
@@ -969,6 +974,10 @@ class ProductController extends Controller
 				$coupon_amount = Session::get('CouponAmount'); 
 			 }
 
+
+            /*// Fetch Shipping Charges
+            $shippingCharges = Product::getShippingCharges($shippingDetails->country);*/
+
 			$order = new Order;
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -983,7 +992,7 @@ class ProductController extends Controller
             $order->coupon_amount = $coupon_amount;
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
-            $order->shipping_charges ="";
+            $order->shipping_charges = Session::get('ShippingCharges');
             $order->grand_total = $data['grand_total'];
 			$order->save();
 			
