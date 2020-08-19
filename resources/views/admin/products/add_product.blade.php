@@ -54,6 +54,12 @@
                 </div>
               </div>
               <div class="control-group">
+                <label class="control-label">Weight (g)</label>
+                <div class="controls">
+                  <input type="text" name="weight" id="weight">
+                </div>
+              </div>
+              <div class="control-group">
                 <label class="control-label">Description</label>
                 <div class="controls">
                   <textarea name="description" id="description"></textarea>

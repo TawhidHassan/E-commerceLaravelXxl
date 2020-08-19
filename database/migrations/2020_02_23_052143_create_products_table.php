@@ -21,8 +21,9 @@ class CreateProductsTable extends Migration
             $table->string('product_color');
             $table->text('description');
             $table->text('care');
-            $table->string('sleeve')->nullable();;
-            $table->string('pattern')->nullable();;
+            $table->string('sleeve')->nullable();
+            $table->string('pattern')->nullable();
+            $table->integer('weight')->nullable();
             $table->float('price');
             $table->string('image');
             $table->string('video');

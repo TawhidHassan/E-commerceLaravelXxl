@@ -93,12 +93,12 @@
                   <input type="text" name="price" id="price" value="{{ $productDetails->price }}">
                 </div>
               </div>
-              {{-- <div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Weight (g)</label>
                 <div class="controls">
                   <input type="text" name="weight" id="weight" value="{{ $productDetails->weight }}">
                 </div>
-              </div> --}}
+              </div>
               <div class="control-group">
                 <label class="control-label">Image</label>
                 <div class="controls">

@@ -82,6 +82,11 @@ class ProductController extends Controller
                 $product->pattern = $data['pattern'];
             }else{
                 $product->pattern = ''; 
+			}
+			if(!empty($data['weight'])){
+                $product->weight = $data['weight'];
+            }else{
+                $product->weight = 0; 
             }
 
     		$product->price = $data['price'];
@@ -223,6 +228,7 @@ class ProductController extends Controller
 			'video'=>$videoName,
 			'status'=>$status,
 			'pattern'=>$pattern,
+			'weight'=>$data['weight'],
 			]);
 			return redirect()->back()->with('flash_message_success','product updated Successfully!');
 
@@ -885,11 +891,11 @@ class ProductController extends Controller
         $shippingDetails = DeliveryAddress::where('user_id',$user_id)->first();
         $shippingDetails = json_decode(json_encode($shippingDetails));
         $userCart = DB::table('cart')->where(['user_email' => $user_email])->get();
-
+		$total_weight = 0;
 		foreach($userCart as $key => $product){
             $productDetails = Product::where('id',$product->product_id)->first();
             $userCart[$key]->image = $productDetails->image;
-            $total_weight = 1001;
+            $total_weight = $total_weight + $productDetails->weight;
         }
 
 		$codpincodeCount = DB::table('cod_pincodes')->where('pincode',$shippingDetails->pincode)->count();
