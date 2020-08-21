@@ -1172,9 +1172,9 @@ class ProductController extends Controller
                 ->orWhere('product_color','like','%'.$search_product.'%');
             })->where('status',1)->get();
 			// echo $productsAll;
-            // $breadcrumb = "<a href='/'>Home</a> / ".$search_product;
+            $breadcrumb = "<a href='/'>Home</a> / ".$search_product;
 
-            return view('products.listing')->with(compact('categories','productsAll','search_product')); 
+            return view('products.listing')->with(compact('categories','productsAll','search_product','breadcrumb')); 
         }
 	}
 
