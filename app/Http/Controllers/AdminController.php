@@ -27,7 +27,6 @@ class AdminController extends Controller
     	}
     	return view('admin.admin_login');
     }
-
     public function dashboard()
     {
         return view('admin.dashbord');
@@ -79,5 +78,13 @@ class AdminController extends Controller
         Session::flush();
         return redirect('/admin')->with('flash_message_success', 'Logged out successfully.');
        
+    }
+
+    public function viewAdmins (){
+        $admins=Admin::get();
+        // $admins=json_decode(json_encode($admins));
+        // echo "<pre>";print_r($admins);die;
+
+        return view('admin.admins.view_admins')->with(compact('admins'));
     }
 }

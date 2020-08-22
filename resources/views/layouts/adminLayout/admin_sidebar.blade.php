@@ -38,6 +38,11 @@
         <li <?php if (preg_match("/view-users/i", $url)){ ?> class="active" <?php } ?>><a href="{{ url('/admin/view-users')}}">View Users</a></li>
       </ul>
     </li> 
+    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Admin/Sub-Admin</span> <span class="label label-important">1</span></a>
+      <ul <?php if (preg_match("/admins/i", $url)){ ?> style="display: block;" <?php } ?>>
+        <li <?php if (preg_match("/view-admins/i", $url)){ ?> class="active" <?php } ?>><a href="{{ url('/admin/view-admins')}}">View Admin</a></li>
+      </ul>
+    </li> 
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>CMS Pages</span> <span class="label label-important">2</span></a>
       <ul <?php if (preg_match("/cms-page/i", $url)){ ?> style="display: block;" <?php } ?>>
         <li <?php if (preg_match("/add-cms-page/i", $url)){ ?> class="active" <?php } ?>><a href="{{ url('/admin/add-cms-page')}}">Add CMS Page</a></li>
