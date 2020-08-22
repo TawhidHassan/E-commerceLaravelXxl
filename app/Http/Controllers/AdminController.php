@@ -87,4 +87,25 @@ class AdminController extends Controller
 
         return view('admin.admins.view_admins')->with(compact('admins'));
     }
+
+    public function addAdmin(Request $request){
+        if($request->isMethod('post')){
+            $data = $request->all();
+            /*echo "<pre>";print_r($data); die;*/
+            $adminCount = Admin::where('name',$data['username'])->count();
+            if($adminCount>0){
+                return redirect()->back()->with('flash_message_error','Admin / Sub Admin already exists! Please choose another.');
+            }else{
+                $admin = new Admin;
+                $admin->name = $data['username'];
+                $admin->password = md5($data['password']);
+                $admin->status = $data['status'];
+                $admin->save();
+                return redirect()->back()->with('flash_message_success','Admin added successfully!');    
+            }
+           
+        }
+    
+        return view('admin.admins.add_admin');
+    }
 }
