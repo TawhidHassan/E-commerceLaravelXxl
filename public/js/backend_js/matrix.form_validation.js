@@ -1,7 +1,17 @@
 
 $(document).ready(function(){
+	$("#access").hide();
+	$("#type").change(function(){
+		var type=$("#type").val();
 
+		if(type=="Admin"){
+			$("#access").hide();
+		}else{
+			$("#access").show();
+		}
 
+	})
+	
     //ajax request for check current password and old password  to be match?
 	$("#current_pwd").keyup(function(){
 		var current_pwd = $("#current_pwd").val();
