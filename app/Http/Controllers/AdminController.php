@@ -96,12 +96,44 @@ class AdminController extends Controller
             if($adminCount>0){
                 return redirect()->back()->with('flash_message_error','Admin / Sub Admin already exists! Please choose another.');
             }else{
-                $admin = new Admin;
-                $admin->name = $data['username'];
-                $admin->password = md5($data['password']);
-                $admin->status = $data['status'];
-                $admin->save();
-                return redirect()->back()->with('flash_message_success','Admin added successfully!');    
+                if($data['type']=="Admin"){
+                    $admin = new Admin;
+                    $admin->type = $data['type'];
+                    $admin->name = $data['username'];
+                    $admin->password = md5($data['password']);
+                    $admin->status = $data['status'];
+                    $admin->save();
+                    return redirect()->back()->with('flash_message_success','Admin added successfully!');    
+                }
+                else if($data['type']=="Sub Admin"){
+                    if(empty($data['categories_access'])){
+                        $data['categories_access'] = 0;
+                    }
+                    if(empty($data['products_access'])){
+                        $data['products_access'] = 0;
+                    }
+                    if(empty($data['orders_access'])){
+                        $data['orders_access'] = 0;
+                    }
+                    if(empty($data['users_access'])){
+                        $data['users_access'] = 0;
+                    }
+
+                    $admin = new Admin;
+                    $admin->type = $data['type'];
+                    $admin->name = $data['username'];
+                    $admin->password = md5($data['password']);
+                    $admin->status = $data['status'];
+                    $admin->categories_access = $data['categories_access'];
+                    $admin->products_access = $data['products_access'];
+                    $admin->orders_access = $data['orders_access'];
+                    $admin->users_access = $data['users_access'];
+                    $admin->save();
+                    return redirect()->back()->with('flash_message_success','Sub Admin added successfully!'); 
+
+                }
+
+
             }
            
         }
