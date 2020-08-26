@@ -62,7 +62,7 @@
                 ?>
                 <tr class="gradeX">
                   <td class="center">{{ $admin->id }}</td>
-                  <td class="center">{{ $admin->username }}</td>
+                  <td class="center">{{ $admin->name }}</td>
                   <td class="center">{{ $admin->type }}</td>
                   <td class="center">{{ $roles }}</td>
                   <td class="center">
