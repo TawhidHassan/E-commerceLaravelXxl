@@ -140,4 +140,40 @@ class AdminController extends Controller
     
         return view('admin.admins.add_admin');
     }
+
+    public function editAdmin(Request $request, $id){
+        $adminDetails = Admin::where('id',$id)->first();
+        /*$adminDetails = json_decode(json_encode($adminDetails)); 
+        echo "<pre>"; print_r($adminDetails); die;*/
+        if($request->isMethod('post')){
+            $data = $request->all();
+            /*echo "<pre>"; print_r($data); die;*/
+            if(empty($data['status'])){
+                $data['status'] = 0;
+            }
+            if($data['type']=="Admin"){
+                Admin::where('username',$data['username'])->update(['password'=>md5($data['password']),'status'=>$data['status']]);
+                return redirect()->back()->with('flash_message_success','Admin updated successfully!');    
+            }else if($data['type']=="Sub Admin"){
+
+                if(empty($data['categories_access'])){
+                        $data['categories_access'] = 0;
+                    }
+                if(empty($data['products_access'])){
+                    $data['products_access'] = 0;
+                }
+                if(empty($data['orders_access'])){
+                    $data['orders_access'] = 0;
+                }
+                if(empty($data['users_access'])){
+                    $data['users_access'] = 0;
+                }
+                Admin::where('name',$data['username'])->update(['password'=>md5($data['password']),'status'=>$data['status'],'categories_access'=>$data['categories_access'],'products_access'=>$data['products_access'],'orders_access'=>$data['orders_access'],'users_access'=>$data['users_access']]);
+                return redirect()->back()->with('flash_message_success','Sub Admin updated successfully!');     
+            }
+
+        }
+        return view('admin.admins.edit_admin')->with(compact('adminDetails'));
+    }
+
 }
