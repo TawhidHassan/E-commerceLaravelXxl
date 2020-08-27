@@ -1117,6 +1117,9 @@ class ProductController extends Controller
 	}
 	
 	public function viewOrders(){
+		if(Session::get('adminDetails')['orders_access']==0){
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
+        }
         $orders = Order::with('orders')->orderBy('id','Desc')->get();
         $orders = json_decode(json_encode($orders));
         /*echo "<pre>"; print_r($orders); die;*/

@@ -11,12 +11,18 @@ class CategoryController extends Controller
     public function viewCategories()
     {
     
+        if(Session::get('adminDetails')['categories_access']==0){
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
+        }
         $categories=Category::get();
         $categories=json_decode(json_encode($categories));
         return view('admin.categories.view_categories')->with(compact('categories'));
     }
 
     public function addCategory(Request $request){
+        if(Session::get('adminDetails')['categories_access']==0){
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
+        }
     	if($request->isMethod('post')){
     		$data = $request->all();
             //echo "<pre>"; print_r($data); die;
@@ -55,6 +61,9 @@ class CategoryController extends Controller
     }
 
     public function editCategory(Request $request, $id = null){
+        if(Session::get('adminDetails')['categories_access']==0){
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
+        }
         if($request->isMethod('post')){
             $data = $request->all();
             //echo "<pre>"; print_r($data); die;
@@ -82,6 +91,9 @@ class CategoryController extends Controller
     }
 
     public function deleteCategory(Request $request, $id = null){
+        if(Session::get('adminDetails')['categories_access']==0){
+            return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
+        }
         if(!empty($id)){
             Category::where(['id'=>$id])->delete();
             return redirect()->back()->with('flash_message_success','Category deleted Successfully!');
