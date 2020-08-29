@@ -49,10 +49,10 @@
               <div class="control-group">
                 <label class="control-label">Access</label>
                 <div class="controls">
-                  <input type="checkbox" name="categories_access" id="categories_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_access == "1") checked @endif>&nbsp;Categories&nbsp;&nbsp;&nbsp;
-                  {{-- <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_view_access == "1") checked @endif>&nbsp;Categories View Only&nbsp;&nbsp;&nbsp; --}}
-                  {{-- <input type="checkbox" name="categories_edit_access" id="categories_edit_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_edit_access == "1") checked @endif>&nbsp;Categories View & Edit&nbsp;&nbsp;&nbsp; --}}
-                  {{-- <input type="checkbox" name="categories_full_access" id="categories_full_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_full_access == "1") checked @endif>&nbsp;Categories View, Edit & Delete&nbsp;&nbsp;&nbsp; --}}
+                  {{-- <input type="checkbox" name="categories_access" id="categories_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_access == "1") checked @endif>&nbsp;Categories&nbsp;&nbsp;&nbsp; --}}
+                  <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_view_access == "1") checked @endif>&nbsp;Categories View Only&nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" name="categories_edit_access" id="categories_edit_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_edit_access == "1") checked @endif>&nbsp;Categories View & Edit&nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" name="categories_full_access" id="categories_full_access" value="1" style="margin-top: -3px;" @if($adminDetails->categories_full_access == "1") checked @endif>&nbsp;Categories View, Edit & Delete&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="products_access" id="products_access" value="1" style="margin-top: -3px;"  @if($adminDetails->products_access == "1") checked @endif>&nbsp;Products&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="orders_access" id="orders_access" value="1" style="margin-top: -3px;"  @if($adminDetails->orders_access == "1") checked @endif>&nbsp;Orders&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="users_access" id="users_access" value="1" style="margin-top: -3px;"  @if($adminDetails->users_access == "1") checked @endif>&nbsp;Users

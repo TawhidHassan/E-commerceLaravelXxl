@@ -51,10 +51,10 @@
               <div class="control-group" id="access" >
                 <label class="control-label">Access</label>
                 <div class="controls">
-                  <input type="checkbox" name="categories_access" id="categories_access" value="1" style="margin-top: -3px;">&nbsp;Categories&nbsp;&nbsp;&nbsp;
-                  {{-- <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" style="margin-top: -3px;">&nbsp;View Categories Only&nbsp;&nbsp;&nbsp; --}}
-                  {{-- <input type="checkbox" name="categories_edit_access" id="categories_edit_access" value="1" style="margin-top: -3px;">&nbsp;View and Edit Categories&nbsp;&nbsp;&nbsp; --}}
-                  {{-- <input type="checkbox" name="categories_full_access" id="categories_full_access" value="1" style="margin-top: -3px;">&nbsp;View, Edit and Delete Categories&nbsp;&nbsp;&nbsp;<br> --}}
+                  {{-- <input type="checkbox" name="categories_access" id="categories_access" value="1" style="margin-top: -3px;">&nbsp;Categories&nbsp;&nbsp;&nbsp; --}}
+                  <input type="checkbox" name="categories_view_access" id="categories_view_access" value="1" style="margin-top: -3px;">&nbsp;View Categories Only&nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" name="categories_edit_access" id="categories_edit_access" value="1" style="margin-top: -3px;">&nbsp;Edit Categories&nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" name="categories_full_access" id="categories_full_access" value="1" style="margin-top: -3px;">&nbsp;View, Edit and Delete Categories&nbsp;&nbsp;&nbsp;<br>
                   <input type="checkbox" name="products_access" id="products_access" value="1" style="margin-top: -3px;">&nbsp;Products&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="orders_access" id="orders_access" value="1" style="margin-top: -3px;">&nbsp;Orders&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="users_access" id="users_access" value="1" style="margin-top: -3px;">&nbsp;Users

@@ -18,7 +18,9 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('password');
             $table->enum('choices', ['Admin', 'Sub Admin'])->nullable()->default(['Admin']);
-            $table->boolean('categories_access')->nullable();
+            $table->boolean('categories_view_access')->nullable();
+            $table->boolean('categories_full_access')->nullable();
+            $table->boolean('categories_edit_access')->nullable();
             $table->boolean('products_access')->nullable();
             $table->boolean('orders_access')->nullable();
             $table->boolean('users_access')->nullable();

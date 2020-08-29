@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -61,7 +62,7 @@ class CategoryController extends Controller
     }
 
     public function editCategory(Request $request, $id = null){
-        if(Session::get('adminDetails')['categories_access']==0){
+        if(Session::get('adminDetails')['categories_edit_access']==0){
             return redirect('/admin/dashboard')->with('flash_message_error','You have no access for this module');
         }
         if($request->isMethod('post')){

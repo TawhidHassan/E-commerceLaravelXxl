@@ -106,9 +106,21 @@ class AdminController extends Controller
                     return redirect()->back()->with('flash_message_success','Admin added successfully!');    
                 }
                 else if($data['type']=="Sub Admin"){
-                    if(empty($data['categories_access'])){
-                        $data['categories_access'] = 0;
+                    if(empty($data['categories_view_access'])){
+                        $data['categories_view_access'] = 0;
                     }
+                    if(empty($data['categories_edit_access'])){
+                        $data['categories_edit_access'] = 0;
+                    }
+                    if(empty($data['categories_full_access'])){
+                        $data['categories_full_access'] = 0;
+                    }else{
+                        if($data['categories_full_access']==1){
+                            $data['categories_view_access'] = 1;
+                            $data['categories_edit_access'] = 1;    
+                        }    
+                    }
+
                     if(empty($data['products_access'])){
                         $data['products_access'] = 0;
                     }
@@ -124,7 +136,9 @@ class AdminController extends Controller
                     $admin->name = $data['username'];
                     $admin->password = md5($data['password']);
                     $admin->status = $data['status'];
-                    $admin->categories_access = $data['categories_access'];
+                    $admin->categories_view_access = $data['categories_view_access'];
+                    $admin->categories_edit_access = $data['categories_edit_access'];
+                    $admin->categories_full_access = $data['categories_full_access'];
                     $admin->products_access = $data['products_access'];
                     $admin->orders_access = $data['orders_access'];
                     $admin->users_access = $data['users_access'];
@@ -155,10 +169,20 @@ class AdminController extends Controller
                 Admin::where('username',$data['username'])->update(['password'=>md5($data['password']),'status'=>$data['status']]);
                 return redirect()->back()->with('flash_message_success','Admin updated successfully!');    
             }else if($data['type']=="Sub Admin"){
-
-                if(empty($data['categories_access'])){
-                        $data['categories_access'] = 0;
-                    }
+                if(empty($data['categories_view_access'])){
+                    $data['categories_view_access'] = 0;
+                }
+                if(empty($data['categories_edit_access'])){
+                    $data['categories_edit_access'] = 0;
+                }
+                if(empty($data['categories_full_access'])){
+                    $data['categories_full_access'] = 0;
+                }else{
+                    if($data['categories_full_access']==1){
+                        $data['categories_view_access'] = 1;
+                        $data['categories_edit_access'] = 1;    
+                    }    
+                }
                 if(empty($data['products_access'])){
                     $data['products_access'] = 0;
                 }
@@ -168,7 +192,7 @@ class AdminController extends Controller
                 if(empty($data['users_access'])){
                     $data['users_access'] = 0;
                 }
-                Admin::where('name',$data['username'])->update(['password'=>md5($data['password']),'status'=>$data['status'],'categories_access'=>$data['categories_access'],'products_access'=>$data['products_access'],'orders_access'=>$data['orders_access'],'users_access'=>$data['users_access']]);
+                Admin::where('username',$data['username'])->update(['password'=>md5($data['password']),'status'=>$data['status'],'categories_view_access'=>$data['categories_view_access'],'categories_edit_access'=>$data['categories_edit_access'],'categories_full_access'=>$data['categories_full_access'],'products_access'=>$data['products_access'],'orders_access'=>$data['orders_access'],'users_access'=>$data['users_access']]);
                 return redirect()->back()->with('flash_message_success','Sub Admin updated successfully!');     
             }
 
