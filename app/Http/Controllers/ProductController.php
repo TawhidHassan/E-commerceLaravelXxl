@@ -984,6 +984,11 @@ class ProductController extends Controller
             /*// Fetch Shipping Charges
             $shippingCharges = Product::getShippingCharges($shippingDetails->country);*/
 
+			$grand_totals = Product::getGrandTotal();
+			Session::put('grand_total',$grand_totals);
+			// echo"<pre>";print_r($grand_totals);die;
+			// echo"<pre>";print_r($xxx);die;
+			// echo"<pre>";print_r($xx);die;
 			$order = new Order;
             $order->user_id = $user_id;
             $order->user_email = $user_email;
@@ -999,7 +1004,7 @@ class ProductController extends Controller
             $order->order_status = "New";
             $order->payment_method = $data['payment_method'];
             $order->shipping_charges = Session::get('ShippingCharges');
-            $order->grand_total = $data['grand_total'];
+            $order->grand_total = $grand_totals;
 			$order->save();
 			
 
@@ -1034,7 +1039,7 @@ class ProductController extends Controller
 
 			}
 			Session::put('order_id',$order_id);
-			Session::put('grand_total',$data['grand_total']);
+			
 
 			if($data['payment_method']=="COD")
 			{

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\ProductsAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -87,6 +88,21 @@ class Product extends Model
             $shipping_charges = 0;
         }
         return $shipping_charges;
+    }
+
+    public static function getGrandTotal(){
+        $getGrandTotal = "";
+        $username = Auth::user()->email;
+        $userCart = DB::table('cart')->where('user_email',$username)->get();
+        $userCart = json_decode(json_encode($userCart),true);
+        // echo "<pre>";print_r($userCart); die;
+        foreach($userCart as $product){
+            $productPrice = ProductsAttribute::where(['product_id'=>$product['product_id'],'size'=>$product['size']])->first();
+            $priceArray[] = $productPrice->price;
+        }
+        $grandTotal = array_sum($priceArray) - Session::get('CouponAmount') + Session::get('ShippingCharges');
+        // echo "<pre>";print_r($productPrice); die;
+        return $grandTotal;
     }
 
 }
