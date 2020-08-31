@@ -105,4 +105,9 @@ class Product extends Model
         return $grandTotal;
     }
 
+    public static function getProductPrice($product_id,$product_size){
+        $getProductPrice = ProductsAttribute::select('price')->where(['product_id'=>$product_id,'size'=>$product_size])->first();
+        return $getProductPrice->price;
+    }
+
 }
