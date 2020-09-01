@@ -1019,8 +1019,9 @@ class ProductController extends Controller
                 $cartPro->product_code = $pro->product_code;
                 $cartPro->product_name = $pro->product_name;
                 $cartPro->product_color = $pro->product_color;
-                $cartPro->product_size = $pro->size;
-                $cartPro->product_price = $pro->price;
+				$cartPro->product_size = $pro->size;
+				$product_price = Product::getProductPrice($pro->product_id,$pro->size);
+                $cartPro->product_price = $product_price;
                 $cartPro->product_qty = $pro->quantity;
 				$cartPro->save();
 				
