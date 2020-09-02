@@ -85,6 +85,13 @@ Route::match(['get', 'post'],'/products-filter', 'ProductController@filter');
 // Confirm Account
 Route::get('confirm/{code}','UserController@confirmAccount');
 
+// Check Subscriber Email
+Route::post('/check-subscriber-email','NewsletterController@checkSubscriber');
+
+// Add Subscriber Email
+Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
+
+
 ///to prevent all route after login
 Route::group(['middleware' => ['frontlogin']], function () {
     // Users Accounts
@@ -219,3 +226,4 @@ Route::match(['GET','POST'],'/contact','CmsController@contact');
 
 // Check Pincode
 Route::post('/check-pincode','ProductController@checkPincode');
+

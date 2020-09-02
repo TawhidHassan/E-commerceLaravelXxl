@@ -346,4 +346,6 @@ $('.toggle').on('click', function() {
 	});
 		
 	}
+
+
 	// Validate Register form on keyup and submit
