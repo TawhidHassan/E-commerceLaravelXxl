@@ -216,6 +216,18 @@ Route::group(['middleware'=>['adminlogin']], function () {
    // Edit Admins/Sub-Admins Route
   Route::match(['get','post'],'/admin/edit-admin/{id}','AdminController@editAdmin');
 
+  // View Newsletter Subscribers
+	Route::get('admin/view-newsletter-subscribers','NewsletterController@viewNewsletterSubscribers');
+
+	// Update Newsletter Status
+	Route::get('admin/update-newsletter-status/{id}/{status}','NewsletterController@updateNewsletterStatus');
+
+	// Delete Newsletter Email
+	Route::get('admin/delete-newsletter-email/{id}','NewsletterController@deleteNewsletterEmail');
+
+	// Export Newsletter Emails
+	Route::get('/admin/export-newsletter-emails','NewsletterController@exportNewsletterEmails');
+
 });
 
 

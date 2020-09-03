@@ -27,5 +27,20 @@ class NewsletterController extends Controller
         }
     }
 
+    public function viewNewsletterSubscribers(){
+        $newsletters = NewsletterSubscriber::get();
+        return view('admin.newsletters.view_newsletters')->with(compact('newsletters'));
+    }
+
+    public function deleteNewsletterEmail($id){
+        NewsletterSubscriber::where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Newsletter Email has been deleted!');
+    }
+
+    public function updateNewsletterStatus($id,$status){
+        NewsletterSubscriber::where('id',$id)->update(['status'=>$status]);
+        return redirect()->back()->with('flash_message_success','Newsletter Status has been updated!');
+    }
+
 
 }
