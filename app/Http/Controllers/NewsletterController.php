@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\NewsletterSubscriber;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NewsletterController extends Controller
 {
@@ -42,5 +43,20 @@ class NewsletterController extends Controller
         return redirect()->back()->with('flash_message_success','Newsletter Status has been updated!');
     }
 
+     public function exportNewsletterEmails(){
+        $subscribersData = NewsletterSubscriber::select('id','email','created_at')->where('status',1)->orderBy('id','Desc')->get();
+        $subscribersData = json_decode(json_encode($subscribersData),true);
+        return Excel::create('subscribers'.rand(),function($excel) use($subscribersData){
+            $excel->sheet('mySheet',function($sheet) use($subscribersData){
+                $sheet->fromArray($subscribersData);
+            });
+        })->download('xlsx');
+    }
+
+
+
+    // public function exportNewsletterEmails(){
+    //     return Excel::download(new subscribersExport,'subscribers.xlsx');
+    // }
 
 }

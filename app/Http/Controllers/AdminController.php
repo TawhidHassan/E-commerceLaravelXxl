@@ -180,7 +180,7 @@ class AdminController extends Controller
                 }else{
                     if($data['categories_full_access']==1){
                         $data['categories_view_access'] = 1;
-                        $data['categories_edit_access'] = 1;    
+                        $data['categories_edit_access'] = 1;
                     }    
                 }
                 if(empty($data['products_access'])){
