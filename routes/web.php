@@ -226,7 +226,11 @@ Route::group(['middleware'=>['adminlogin']], function () {
 	Route::get('admin/delete-newsletter-email/{id}','NewsletterController@deleteNewsletterEmail');
 
 	// Export Newsletter Emails
-	Route::get('/admin/export-newsletter-emails','NewsletterController@exportNewsletterEmails');
+    Route::get('/admin/export-newsletter-emails','NewsletterController@exportNewsletterEmails');
+    
+
+    // Export Users
+    Route::get('/admin/export-users','UserController@exportUsers');
 
 });
 
