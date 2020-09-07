@@ -231,6 +231,8 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
     // Export Users
     Route::get('/admin/export-users','UserController@exportUsers');
+    // Export Products
+    Route::get('/admin/export-products','ProductController@exportProducts');
 
 });
 

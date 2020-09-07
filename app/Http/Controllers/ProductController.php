@@ -13,6 +13,8 @@ use App\ProductsImage;
 use App\DeliveryAddress;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
+use Excel;
+use App\Exports\productsExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -1192,6 +1194,11 @@ class ProductController extends Controller
             $data = $request->all();
             echo $pincodeCount = DB::table('pincodes')->where('pincode',$data['pincode'])->count();
         }
+	}
+	
+	public function exportProducts(){
+        return Excel::download(new productsExport,'products.xlsx');
     }
+
 }
 
