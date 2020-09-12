@@ -139,13 +139,13 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="description" >
                             <div class="col-sm-12">
-                                <p>{{ $productDetails->description }}</p>
+                                <p><?php echo nl2br($productDetails->description); ?></p>
                             </div>	
                         </div>
                         
                         <div class="tab-pane fade" id="care" >
                             <div class="col-sm-12">
-                                <p>{{ $productDetails->care }}</p>
+                                <p><?php echo nl2br($productDetails->care); ?></p>
                             </div>
                         </div>
                         
