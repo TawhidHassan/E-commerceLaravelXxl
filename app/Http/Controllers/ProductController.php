@@ -96,7 +96,7 @@ class ProductController extends Controller
     		// Upload Image
     		if($request->hasFile('image')){
                 
-                $image_tmp = Input::file('image');
+                $image_tmp =$request->file('image');
     			if($image_tmp->isValid()){
     				$extension = $image_tmp->getClientOriginalExtension();
     				$filename = rand(111,99999).'.'.$extension;
@@ -115,7 +115,7 @@ class ProductController extends Controller
 			
 			// Upload Video
 			if($request->hasFile('video')){
-				$video_tmp = Input::file('video');
+				$video_tmp = $request->file('video');
 				$video_name = $video_tmp->getClientOriginalName();
 				$video_path = 'videos/';
 				$video_tmp->move($video_path,$video_name);
@@ -159,7 +159,7 @@ class ProductController extends Controller
 			// Upload Image
     		if($request->hasFile('image')){
                 
-                $image_tmp = Input::file('image');
+                $image_tmp = $request->file('image');
     			if($image_tmp->isValid()){
     				$extension = $image_tmp->getClientOriginalExtension();
     				$filename = rand(111,99999).'.'.$extension;
@@ -177,7 +177,7 @@ class ProductController extends Controller
 
 			// Upload Video
             if($request->hasFile('video')){
-                $video_tmp = Input::file('video');
+                $video_tmp = $request->file('video');
                 $video_name = $video_tmp->getClientOriginalName();
                 $video_path = 'videos/';
                 $video_tmp->move($video_path,$video_name);
