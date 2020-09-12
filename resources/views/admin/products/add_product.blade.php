@@ -62,13 +62,13 @@
               <div class="control-group">
                 <label class="control-label">Description</label>
                 <div class="controls">
-                  <textarea name="description" id="description"></textarea>
+                  <textarea name="description" class="textarea_editor span12"></textarea>
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Material & Care</label>
                 <div class="controls">
-                  <textarea name="care" id="care"></textarea>
+                  <textarea name="care" class="textarea_care span12"></textarea>
                 </div>
               </div>
               <div class="control-group">
