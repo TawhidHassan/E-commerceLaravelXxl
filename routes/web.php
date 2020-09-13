@@ -234,6 +234,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
     // Export Products
     Route::get('/admin/export-products','ProductController@exportProducts');
 
+    // Print PDF Invoice
+    Route::get('/admin/view-pdf-invoice/{id}','ProductController@viewPDFInvoice');
+
 });
 
 
