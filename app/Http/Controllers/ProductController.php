@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\User;
 use App\Order;
 use App\Coupon;
 use App\Country;
 use App\Product;
 use App\Category;
+use Dompdf\Dompdf;
 use App\OrdersProduct;
 use App\ProductsImage;
 use App\DeliveryAddress;
 use App\ProductsAttribute;
 use Illuminate\Http\Request;
-use Excel;
+use Illuminate\Support\Carbon;
 use App\Exports\productsExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +24,6 @@ use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Dompdf\Dompdf;
 
 class ProductController extends Controller
 {
@@ -671,7 +672,51 @@ class ProductController extends Controller
         $data = $request->all();
         // echo "<pre>"; print_r($data); die;
 
-        // Check Product Stock is available or not
+
+        if(!empty($data['wishListButton']) && $data['wishListButton']=="Wish List"){
+                   
+             /*echo "Wish List is selected"; die;*/
+
+            // Check User is logged in
+            if(!Auth::check()){
+                return redirect()->back()->with('flash_message_error','Please login to add product in your Wish List');
+            }
+
+            // Check Size is selected
+            if(empty($data['size'])){
+                return redirect()->back()->with('flash_message_error','Please select size to add product in your Wish List');
+            }
+
+            // Get Product Size
+            $sizeIDArr = explode('-',$data['size']);
+            $product_size = $sizeIDArr[1];
+
+            // Get Product Price
+            $proPrice = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$product_size])->first();
+            $product_price = $proPrice->price;
+
+            // Get User Email/Username
+            $user_email = Auth::user()->email;
+
+            // Set Quantity as 1
+            $quantity = 1;
+
+            // Get Current Date
+            $created_at = Carbon::now();
+
+            $wishListCount = DB::table('wish_list')->where(['user_email'=>$user_email,'product_id'=>$data['product_id'],'product_color'=>$data['product_color'],'size'=>$product_size])->count();
+
+            if($wishListCount>0){
+                return redirect()->back()->with('flash_message_error','Product already exists in Wish List!');
+            }else{
+                // Insert Product in Wish List
+                DB::table('wish_list')->insert(['product_id'=>$data['product_id'],'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'product_color'=>$data['product_color'],'price'=>$product_price,'size'=>$product_size,'quantity'=>$quantity,'user_email'=>$user_email,'created_at'=>$created_at]);
+                return redirect()->back()->with('flash_message_success','Product has been added in Wish List');
+            }
+
+        }else{
+
+            // Check Product Stock is available or not
         $product_size = explode("-",$data['size']);
         $getProductStock = ProductsAttribute::where(['product_id'=>$data['product_id'],'size'=>$product_size[1]])->first();
 
@@ -715,6 +760,9 @@ class ProductController extends Controller
             'price' => $data['price'],'size' => $product_size,'quantity' => $data['quantity'],'user_email' => $data['user_email'],'session_id' => $session_id]);
 
         return redirect('cart')->with('flash_message_success','Product has been added in Cart!');
+        }
+
+       
     }
 
 	public function cart(Request $request)
@@ -1407,7 +1455,6 @@ footer {
     </footer>
   </body>
 </html>';
-
     // instantiate and use the dompdf class
     $dompdf = new Dompdf();
     $dompdf->loadHtml($output);
@@ -1422,6 +1469,19 @@ footer {
     $dompdf->stream();
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 

@@ -93,13 +93,16 @@
                                     <label>Quantity:</label>
                                     <input name="quantity" type="text" value="1" />
                                     @if($totla_stock>0)
-                                        <button type="submit" class="btn btn-fefault cart" id="cartButton">
+                                        <button type="submit" class="btn btn-fefault cart" id="cartButton" value="Shopping Cart">
                                             <i class="fa fa-shopping-cart"></i>
                                             Add to cart
                                         </button>
                                     @endif	
                                 </span>
-                                
+                                <p><button type="submit" class="btn btn-fefault cart" id="WishListButton" name="wishListButton" value="Wish List">
+                                    <i class="fa fa-briefcase"></i>
+                                    Add to Wish List
+                                </button></p>
                                 <p><b>Availability:</b><spanm id="Availability">
                                     @if ($totla_stock>0)
                                     In Stock
