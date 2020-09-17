@@ -92,8 +92,7 @@ Route::post('/check-subscriber-email','NewsletterController@checkSubscriber');
 Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
 
 
-// Wish List Page
-Route::match(['get', 'post'],'/wish-list','ProductController@wishList');
+
 
 
 ///to prevent all route after login
@@ -126,7 +125,15 @@ Route::group(['middleware' => ['frontlogin']], function () {
     // Paypal Thanks Page
 	Route::get('/paypal/thanks','ProductController@thanksPaypal');
 	// Paypal Cancel Page
-	Route::get('/paypal/cancel','ProductController@cancelPaypal');
+    Route::get('/paypal/cancel','ProductController@cancelPaypal');
+    
+    // Wish List Page
+    Route::match(['get', 'post'],'/wish-list','ProductController@wishList');
+
+    // Delete Product from Wish List Route
+     Route::get('/wish-list/delete-product/{id}','ProductController@deleteWishlistProduct');
+
+
 });
 
 Route::group(['middleware'=>['adminlogin']], function () {

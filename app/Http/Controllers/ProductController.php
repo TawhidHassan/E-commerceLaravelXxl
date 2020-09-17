@@ -811,6 +811,11 @@ class ProductController extends Controller
         return view('products.wish_list')->with(compact('userWishList','meta_title','meta_description','meta_keywords'));
     }
 
+    public function deleteWishlistProduct($id){ 
+        DB::table('wish_list')->where('id',$id)->delete();
+        return redirect()->back()->with('flash_message_success','Product has been deleted from Wish List');
+    }
+
 	public function deleteCartProduct($id=null){
 		Session::forget('CouponAmount');
 		Session::forget('CouponCode');
