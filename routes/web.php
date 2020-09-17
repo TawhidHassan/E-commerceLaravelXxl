@@ -92,6 +92,10 @@ Route::post('/check-subscriber-email','NewsletterController@checkSubscriber');
 Route::post('/add-subscriber-email','NewsletterController@addSubscriber');
 
 
+// Wish List Page
+Route::match(['get', 'post'],'/wish-list','ProductController@wishList');
+
+
 ///to prevent all route after login
 Route::group(['middleware' => ['frontlogin']], function () {
     // Users Accounts
@@ -236,6 +240,8 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
     // Print PDF Invoice
     Route::get('/admin/view-pdf-invoice/{id}','ProductController@viewPDFInvoice');
+
+    
 
 });
 
