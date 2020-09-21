@@ -248,6 +248,8 @@ Route::group(['middleware'=>['adminlogin']], function () {
     // Print PDF Invoice
     Route::get('/admin/view-pdf-invoice/{id}','ProductController@viewPDFInvoice');
 
+    // View Users Charts
+   Route::get('/admin/view-users-charts','UserController@viewUsersCharts');
     
 
 });

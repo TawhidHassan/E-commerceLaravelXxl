@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+use Excel;
 use App\User;
 use App\Country;
 use App\Exports\usersExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Excel;
 
 class UserController extends Controller
 {
@@ -282,6 +283,14 @@ class UserController extends Controller
   public function exportUsers(){
     return Excel::download(new usersExport,'users.xlsx');
 
+}
+
+
+public function viewUsersCharts(){
+    $current_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+    $last_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+    $last_to_last_month_users = User::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+    return view('admin.users.view_users_charts')->with(compact('current_month_users','last_month_users','last_to_last_month_users'));
 }
 
 }

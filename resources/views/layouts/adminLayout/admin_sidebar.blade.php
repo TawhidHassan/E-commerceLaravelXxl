@@ -44,6 +44,8 @@
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Users</span> <span class="label label-important">1</span></a>
       <ul <?php if (preg_match("/users/i", $url)){ ?> style="display: block;" <?php } ?>>
         <li <?php if (preg_match("/view-users/i", $url)){ ?> class="active" <?php } ?>><a href="{{ url('/admin/view-users')}}">View Users</a></li>
+        <li ><a href="{{ url('/admin/view-users-charts')}}">View Users Charts</a></li>
+
       </ul>
     </li> 
     @endif
