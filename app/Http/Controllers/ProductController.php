@@ -1499,7 +1499,12 @@ footer {
 
 
 
-
+    public function viewOrdersCharts(){
+        $current_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->month)->count();
+        $last_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(1))->count();
+        $last_to_last_month_orders = Order::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', Carbon::now()->subMonth(2))->count();
+        return view('admin.products.view_orders_charts')->with(compact('current_month_orders','last_month_orders','last_to_last_month_orders'));
+    }
 
 
 

@@ -250,6 +250,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
     // View Users Charts
    Route::get('/admin/view-users-charts','UserController@viewUsersCharts');
+
+   // View Orders Charts
+   Route::get('/admin/view-orders-charts','ProductController@viewOrdersCharts');
     
 
 });
