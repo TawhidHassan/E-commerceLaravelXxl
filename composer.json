@@ -12,7 +12,10 @@
         "laravel/framework": "6.0.*",
         "laravel/helpers": "^1.3",
         "laravel/tinker": "^1.0",
-        "maatwebsite/excel": "^3.1.0"
+        "maatwebsite/excel": "^3.1.0",
+        "milon/barcode": "^6.0",
+        "rackspace/php-opencloud": "dev-master"
+        
     },
     "require-dev": {
         "filp/whoops": "^2.0",
