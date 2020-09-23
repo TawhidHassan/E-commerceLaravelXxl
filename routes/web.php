@@ -253,6 +253,9 @@ Route::group(['middleware'=>['adminlogin']], function () {
 
    // View Orders Charts
    Route::get('/admin/view-orders-charts','ProductController@viewOrdersCharts');
+
+   // View Users Countries Pie Chart
+   Route::get('/admin/view-users-countries','UserController@viewUsersCountries');
     
 
 });

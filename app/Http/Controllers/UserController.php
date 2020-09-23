@@ -294,4 +294,14 @@ public function viewUsersCharts(){
     return view('admin.users.view_users_charts')->with(compact('current_month_users','last_month_users','last_to_last_month_users'));
 }
 
+
+public function viewUsersCountries(){
+    $getUserCountries = User::select('country',DB::raw('count(country) as count'))->groupBy('country')->get();
+    $getUserCountries = json_decode(json_encode($getUserCountries),true);
+    // echo $getUserCountries[0]['country']; die;
+    // echo "<pre>"; print_r($getUserCountries); die;
+    return view('admin.users.view_users_countries')->with(compact('getUserCountries'));
+}
+
+
 }

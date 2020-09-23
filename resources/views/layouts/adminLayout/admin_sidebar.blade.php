@@ -46,6 +46,7 @@
       <ul <?php if (preg_match("/users/i", $url)){ ?> style="display: block;" <?php } ?>>
         <li <?php if (preg_match("/view-users/i", $url)){ ?> class="active" <?php } ?>><a href="{{ url('/admin/view-users')}}">View Users</a></li>
         <li ><a href="{{ url('/admin/view-users-charts')}}">View Users Charts</a></li>
+        <li ><a href="{{ url('/admin/view-users-countries')}}">View Users counteris chart</a></li>
 
       </ul>
     </li> 
